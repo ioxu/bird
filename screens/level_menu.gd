@@ -7,6 +7,7 @@ onready var active_tool_label = $active_tool_label
 var mouse_pressed = false
 var mouse_overlapping_areas := []
 var mouse_grabbed_areas := []
+var mouse_deletable_areas := []
 var mouse_status = "none"
 var mouse_clicked_pos := Vector2()
 var last_mouse_pos := Vector2()
@@ -54,26 +55,49 @@ func _input(event):
 			and event.is_pressed()\
 			and mouse_status != "dragging":
 
-			mouse_status = "clicked"
+			mouse_status = "left_clicked"
 			mouse_clicked_pos = event.position
 			mouse_drag_offset = Vector2(0,0)
 			print("mouse_status ", mouse_status)
 			for a in mouse_overlapping_areas:
 				if "grabbable" in a and a.grabbable:
 					mouse_grabbed_areas.append(a)
-			#mouse_grabbed_areas = mouse_overlapping_areas.duplicate()
-			mouse_clicked(mouse_clicked_pos)
+			mouse_left_clicked(mouse_clicked_pos)
 
-		if mouse_status=="clicked" and event is InputEventMouseMotion:
+		# right mouse
+		if event is InputEventMouseButton\
+			and event.button_index == BUTTON_RIGHT\
+			and event.is_pressed()\
+			and mouse_status != "dragging":
+
+			mouse_status = "right_clicked"
+			mouse_clicked_pos = event.position
+			mouse_drag_offset = Vector2(0,0)
+			print("mouse_status ", mouse_status)
+			for a in mouse_overlapping_areas:
+				if "deletable" in a and a.deletable:
+					mouse_deletable_areas.append(a)
+			mouse_right_clicked(mouse_clicked_pos)
+		
+
+		if mouse_status=="left_clicked" and event is InputEventMouseMotion:
 			mouse_status = "dragging"
 			print("mouse_status ", mouse_status)
 
-		if (mouse_status == "dragging" or mouse_status == "clicked") and event is InputEventMouseButton and event.button_index == BUTTON_LEFT:
+		if (mouse_status == "dragging"\
+				or mouse_status == "left_clicked"\
+				or mouse_status == "right_clicked")\
+				and event is InputEventMouseButton\
+				and (event.button_index == BUTTON_LEFT\
+				or event.button_index == BUTTON_RIGHT):
+			
 			if not event.is_pressed():
 				mouse_status = "released"
 				print("mouse_status ", mouse_status)
 				mouse_grabbed_areas.clear()
-
+				mouse_deletable_areas.clear()
+				print("mouse_deletable_areas ", mouse_deletable_areas)
+				
 		# consume all input
 		#get_tree().set_input_as_handled()
 
@@ -93,7 +117,13 @@ func _process(delta):
 	last_mouse_pos = mouse_area.position
 
 
-func mouse_clicked(pos):
+func mouse_right_clicked(pos):
+	for a in mouse_deletable_areas:
+		if is_instance_valid(a):
+			a.destroy()
+
+
+func mouse_left_clicked(pos):
 	#print("mouse_clicked")
 	#print("mouse_canvas_click_enabled ", mouse_canvas_click_enabled)
 	if active_tool == "add" and mouse_canvas_click_enabled:
@@ -112,7 +142,8 @@ func mouse_clicked(pos):
 					last_line_node_activated = null
 				else:
 					print("ACTIVATE")
-					if last_line_node_activated != null:
+					#if last_line_node_activated != null:
+					if is_instance_valid(last_line_node_activated):
 						last_line_node_activated.set_deactivated()
 					last_line_node_activated = area
 					last_line_node_activated.set_activated()
@@ -125,7 +156,8 @@ func mouse_clicked(pos):
 			line_node.set_activated()
 			#last_line_node_activated = line_node
 			
-			if last_line_node_activated != null:
+			#if last_line_node_activated != null:
+			if is_instance_valid(last_line_node_activated):
 				last_line_node_activated.set_deactivated()
 				var line_segment = line_segment_scene.instance()
 				# connect

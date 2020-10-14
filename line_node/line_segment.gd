@@ -2,7 +2,9 @@ extends Area2D
 
 export(NodePath) var from_line_node_path
 export(NodePath) var to_line_node_path
+
 export var grabbable = false
+export var deletable = false
 
 var builder_node_type = "line_segment"
 
@@ -23,6 +25,14 @@ func _ready():
 	if to_line_node:
 		to_line_node.connect("on_moved", self, "_on_line_node_moved")	
 		_on_line_node_moved(Vector2(0,0))
+
+
+func destroy():
+	monitoring = false
+	monitorable = false
+	input_pickable = false
+	self.queue_free()
+
 
 func _on_line_node_moved(vec):
 	var from_node = from_line_node

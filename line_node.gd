@@ -1,7 +1,7 @@
 extends Area2D
 
 export var grabbable = true
-
+export var deletable = true
 signal on_moved
 
 var connected_segments = []
@@ -19,6 +19,15 @@ func connect_segment(segment):
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
+
+func destroy():
+	monitoring = false
+	monitorable = false
+	input_pickable = false
+	for s in connected_segments:
+		if is_instance_valid(s):
+			s.destroy()
+	self.queue_free()
 
 func translate(vec):
 	#print("line_node translate ", vec)
