@@ -1,0 +1,9 @@
+export/
+setup/
+
+# gotdot
+# *.import # it is recommended to track .import files
+
+# blobs of imported data
+.import/
+

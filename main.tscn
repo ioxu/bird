@@ -1,0 +1,583 @@
+[gd_scene load_steps=23 format=2]
+
+[ext_resource path="res://addons/PinSpringJoint2D/PinSpringJoint2D.gd" type="Script" id=1]
+[ext_resource path="res://main.gd" type="Script" id=2]
+[ext_resource path="res://ui_stats.gd" type="Script" id=3]
+[ext_resource path="res://branch.gd" type="Script" id=4]
+[ext_resource path="res://ball.gd" type="Script" id=5]
+[ext_resource path="res://ui.gd" type="Script" id=6]
+[ext_resource path="res://line_node/line_node.tscn" type="PackedScene" id=7]
+[ext_resource path="res://mouse/pointer.png" type="Texture" id=10]
+[ext_resource path="res://screens/level_menu.tscn" type="PackedScene" id=11]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 5.0
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 12.7841, 73.5247 )
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 9.68488, 45.3955 )
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 7.07172, 45.3955 )
+
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 7.07172, 28.7033 )
+
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 4.04803, 36.9547 )
+
+[sub_resource type="RectangleShape2D" id=7]
+extents = Vector2( 4.04803, 75.5678 )
+
+[sub_resource type="RectangleShape2D" id=8]
+extents = Vector2( 4.04803, 45.2699 )
+
+[sub_resource type="RectangleShape2D" id=9]
+extents = Vector2( 4.04803, 64.7437 )
+
+[sub_resource type="RectangleShape2D" id=10]
+extents = Vector2( 7.13922, 45.3955 )
+
+[sub_resource type="Curve2D" id=11]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 787.579, 568.105, 0, 0, 0, 0, 741.263, 468.105, 0, 0, 0, 0, 760.21, 421.789, 0, 0, 0, 0, 790, 410, 0, 0, 0, 0, 825.474, 414.421, 0, 0, 0, 0, 892, 402, 0, 0, 0, 0, 900.21, 387.053, 0, 0, 0, 0, 894, 288, 0, 0, 0, 0, 907, 265, 0, 0, 0, 0, 937.052, 248.105 )
+}
+
+[sub_resource type="Curve" id=12]
+_data = [ Vector2( 0, 1 ), 0.0, -0.148264, 0, 0, Vector2( 1, 0.354545 ), -2.11414, 0.0, 0, 0 ]
+
+[sub_resource type="CircleShape2D" id=13]
+radius = 23.2441
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="ui" type="Node2D" parent="."]
+script = ExtResource( 6 )
+
+[node name="stats" type="Label" parent="ui"]
+margin_left = 5.88074
+margin_top = 10.2913
+margin_right = 45.8807
+margin_bottom = 24.2913
+custom_colors/font_color = Color( 1, 1, 1, 0.313726 )
+text = "stats"
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="level_menu" parent="ui" instance=ExtResource( 11 )]
+mouse_area_path = NodePath("../mouse_area")
+
+[node name="mouse_area" type="Area2D" parent="ui"]
+position = Vector2( 92.4653, 214.831 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ui/mouse_area"]
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="ui/mouse_area"]
+texture = ExtResource( 10 )
+
+[node name="RigidBody2D" type="RigidBody2D" parent="."]
+position = Vector2( 531.737, 473.807 )
+rotation = 0.458659
+collision_layer = 3
+collision_mask = 4
+mass = 0.35
+linear_damp = 0.5
+angular_damp = 0.5
+script = ExtResource( 4 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
+shape = SubResource( 2 )
+
+[node name="PinJoint2D" type="PinJoint2D" parent="RigidBody2D"]
+position = Vector2( 0.741882, -67.8037 )
+node_a = NodePath("..")
+node_b = NodePath("../../RigidBody2D2")
+script = ExtResource( 1 )
+Stiffness = 30.0
+Damping = 1.5
+
+[node name="PinSpringJoint2D" type="PinJoint2D" parent="RigidBody2D"]
+position = Vector2( -2.16058, 25.1726 )
+node_a = NodePath("..")
+node_b = NodePath("../../RigidBody2D5")
+script = ExtResource( 1 )
+Stiffness = 30.0
+
+[node name="RigidBody2D17" type="RigidBody2D" parent="."]
+position = Vector2( 503.105, 602.301 )
+rotation = -0.0190229
+collision_layer = 3
+collision_mask = 4
+mass = 0.35
+linear_damp = 0.5
+angular_damp = 0.5
+script = ExtResource( 4 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D17"]
+shape = SubResource( 2 )
+
+[node name="PinJoint2D" type="PinJoint2D" parent="RigidBody2D17"]
+position = Vector2( 0.741882, -67.8037 )
+node_a = NodePath("..")
+node_b = NodePath("../../RigidBody2D")
+script = ExtResource( 1 )
+Stiffness = 30.0
+Damping = 1.5
+
+[node name="RigidBody2D2" type="RigidBody2D" parent="."]
+position = Vector2( 558.011, 376.672 )
+rotation = -0.0878643
+collision_layer = 3
+collision_mask = 4
+mass = 0.2
+linear_damp = 0.5
+angular_damp = 0.5
+script = ExtResource( 4 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D2"]
+shape = SubResource( 3 )
+
+[node name="PinJoint2D" type="PinJoint2D" parent="RigidBody2D2"]
+position = Vector2( 0.487366, -39.7844 )
+node_a = NodePath("..")
+node_b = NodePath("../../RigidBody2D3")
+script = ExtResource( 1 )
+Stiffness = 30.0
+Damping = 1.5
+
+[node name="RigidBody2D5" type="RigidBody2D" parent="."]
+position = Vector2( 494.874, 461.992 )
+rotation = -0.62138
+collision_layer = 3
+collision_mask = 4
+mass = 0.2
+linear_damp = 0.5
+angular_damp = 0.5
+script = ExtResource( 4 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D5"]
+shape = SubResource( 3 )
+
+[node name="PinJoint2D" type="PinJoint2D" parent="RigidBody2D5"]
+position = Vector2( 0.487366, -39.7844 )
+node_a = NodePath("..")
+node_b = NodePath("../../RigidBody2D7")
+script = ExtResource( 1 )
+Stiffness = 30.0
+Damping = 1.5
+
+[node name="PinJoint2D2" type="PinJoint2D" parent="RigidBody2D5"]
+position = Vector2( 0.487366, -39.7844 )
+node_a = NodePath("..")
+node_b = NodePath("../../RigidBody2D6")
+script = ExtResource( 1 )
+Stiffness = 30.0
+Damping = 1.5
+
+[node name="RigidBody2D3" type="RigidBody2D" parent="."]
+position = Vector2( 584.548, 312.32 )
+rotation = 0.914254
+collision_layer = 3
+collision_mask = 4
+mass = 0.1
+linear_damp = 0.5
+angular_damp = 0.5
+script = ExtResource( 4 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D3"]
+shape = SubResource( 4 )
+
+[node name="PinJoint2D" type="PinJoint2D" parent="RigidBody2D3"]
+position = Vector2( 0.487366, -39.7844 )
+node_a = NodePath("..")
+node_b = NodePath("../../RigidBody2D4")
+script = ExtResource( 1 )
+Stiffness = 30.0
+Damping = 1.5
+
+[node name="PinSpringJoint2D" type="PinJoint2D" parent="RigidBody2D3"]
+position = Vector2( -2.13708, -19.7879 )
+node_a = NodePath("..")
+node_b = NodePath("../../RigidBody2D12")
+script = ExtResource( 1 )
+Stiffness = 15.0
+
+[node name="RigidBody2D6" type="RigidBody2D" parent="."]
+position = Vector2( 446.898, 398.209 )
+rotation = -0.640394
+collision_layer = 3
+collision_mask = 4
+mass = 0.1
+linear_damp = 0.5
+angular_damp = 0.5
+script = ExtResource( 4 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D6"]
+shape = SubResource( 4 )
+
+[node name="PinJoint2D" type="PinJoint2D" parent="RigidBody2D6"]
+position = Vector2( 0.487366, -39.7844 )
+node_a = NodePath("..")
+node_b = NodePath("../../RigidBody2D8")
+script = ExtResource( 1 )
+Stiffness = 30.0
+Damping = 1.5
+
+[node name="RigidBody2D8" type="RigidBody2D" parent="."]
+position = Vector2( 399.119, 363.512 )
+rotation = -1.39084
+collision_layer = 3
+collision_mask = 4
+mass = 0.1
+linear_damp = 0.5
+angular_damp = 0.5
+script = ExtResource( 4 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D8"]
+shape = SubResource( 5 )
+
+[node name="PinJoint2D" type="PinJoint2D" parent="RigidBody2D8"]
+position = Vector2( 1.71027, -20.3503 )
+node_a = NodePath("..")
+node_b = NodePath("../../RigidBody2D9")
+script = ExtResource( 1 )
+Stiffness = 15.0
+Damping = 1.5
+
+[node name="RigidBody2D9" type="RigidBody2D" parent="."]
+position = Vector2( 380.32, 323.582 )
+rotation = 0.0172665
+collision_layer = 3
+collision_mask = 4
+mass = 0.05
+linear_damp = 0.5
+angular_damp = 0.5
+script = ExtResource( 4 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D9"]
+shape = SubResource( 6 )
+
+[node name="PinJoint2D" type="PinJoint2D" parent="RigidBody2D9"]
+position = Vector2( -0.256622, -33.7704 )
+node_a = NodePath("..")
+node_b = NodePath("../../RigidBody2D13")
+script = ExtResource( 1 )
+Stiffness = 1.0
+Damping = 0.15
+
+[node name="RigidBody2D13" type="RigidBody2D" parent="."]
+position = Vector2( 373.495, 255.894 )
+rotation = -0.202901
+collision_layer = 3
+collision_mask = 4
+mass = 0.05
+linear_damp = 0.5
+angular_damp = 0.5
+script = ExtResource( 4 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D13"]
+shape = SubResource( 6 )
+
+[node name="PinJoint2D" type="PinJoint2D" parent="RigidBody2D13"]
+position = Vector2( -0.256622, -33.7704 )
+node_a = NodePath("..")
+script = ExtResource( 1 )
+Stiffness = 30.0
+Damping = 1.5
+
+[node name="RigidBody2D11" type="RigidBody2D" parent="."]
+position = Vector2( 688.51, 247.949 )
+rotation = 0.461109
+collision_layer = 3
+collision_mask = 4
+mass = 0.05
+linear_damp = 0.5
+angular_damp = 0.5
+script = ExtResource( 4 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D11"]
+shape = SubResource( 6 )
+
+[node name="PinJoint2D" type="PinJoint2D" parent="RigidBody2D11"]
+position = Vector2( -0.256622, -33.7704 )
+node_a = NodePath("..")
+node_b = NodePath("../../RigidBody2D15")
+script = ExtResource( 1 )
+Stiffness = 1.0
+Damping = 0.15
+
+[node name="RigidBody2D15" type="RigidBody2D" parent="."]
+position = Vector2( 712.485, 185.395 )
+rotation = 0.240942
+collision_layer = 3
+collision_mask = 4
+mass = 0.05
+linear_damp = 0.5
+angular_damp = 0.5
+script = ExtResource( 4 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D15"]
+shape = SubResource( 6 )
+
+[node name="PinJoint2D" type="PinJoint2D" parent="RigidBody2D15"]
+position = Vector2( -0.256622, -33.7704 )
+node_a = NodePath("..")
+script = ExtResource( 1 )
+Stiffness = 30.0
+Damping = 1.5
+
+[node name="RigidBody2D12" type="RigidBody2D" parent="."]
+position = Vector2( 587.895, 225.875 )
+rotation = -0.137687
+collision_layer = 3
+collision_mask = 4
+mass = 0.05
+linear_damp = 0.5
+angular_damp = 0.5
+script = ExtResource( 4 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D12"]
+shape = SubResource( 7 )
+
+[node name="PinJoint2D" type="PinJoint2D" parent="RigidBody2D12"]
+position = Vector2( -0.268524, -71.0859 )
+node_a = NodePath("..")
+node_b = NodePath("../../RigidBody2D16")
+script = ExtResource( 1 )
+Stiffness = 1.0
+Damping = 0.15
+
+[node name="PinSpringJoint2D" type="PinJoint2D" parent="RigidBody2D12"]
+position = Vector2( -0.221802, 27.7744 )
+node_a = NodePath("..")
+node_b = NodePath("../../RigidBody2D19")
+script = ExtResource( 1 )
+
+[node name="RigidBody2D16" type="RigidBody2D" parent="."]
+position = Vector2( 583.123, 121.741 )
+rotation = 0.126264
+collision_layer = 3
+collision_mask = 4
+mass = 0.05
+linear_damp = 0.5
+angular_damp = 0.5
+script = ExtResource( 4 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D16"]
+shape = SubResource( 6 )
+
+[node name="PinJoint2D" type="PinJoint2D" parent="RigidBody2D16"]
+position = Vector2( -0.256622, -33.7704 )
+node_a = NodePath("..")
+script = ExtResource( 1 )
+Stiffness = 30.0
+Damping = 1.5
+
+[node name="RigidBody2D19" type="RigidBody2D" parent="."]
+position = Vector2( 553.027, 190.408 )
+rotation = -0.549901
+collision_layer = 3
+collision_mask = 4
+mass = 0.05
+linear_damp = 0.5
+angular_damp = 0.5
+script = ExtResource( 4 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D19"]
+position = Vector2( -6.88486, 33.0001 )
+rotation = -0.166781
+shape = SubResource( 8 )
+
+[node name="PinJoint2D" type="PinJoint2D" parent="RigidBody2D19"]
+position = Vector2( -14.3181, -8.06641 )
+node_a = NodePath("..")
+node_b = NodePath("../../RigidBody2D18")
+script = ExtResource( 1 )
+Stiffness = 1.0
+Damping = 0.15
+
+[node name="RigidBody2D18" type="RigidBody2D" parent="."]
+position = Vector2( 521.425, 97.8576 )
+rotation = 0.126264
+collision_layer = 3
+collision_mask = 4
+mass = 0.05
+linear_damp = 0.5
+angular_damp = 0.5
+script = ExtResource( 4 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D18"]
+position = Vector2( 16.9881, 29.2278 )
+rotation = -0.164555
+shape = SubResource( 9 )
+
+[node name="PinJoint2D" type="PinJoint2D" parent="RigidBody2D18"]
+position = Vector2( 6.65414, -31.63 )
+node_a = NodePath("..")
+script = ExtResource( 1 )
+Stiffness = 30.0
+Damping = 1.5
+
+[node name="RigidBody2D10" type="RigidBody2D" parent="."]
+position = Vector2( 479.292, 348.609 )
+rotation = -0.421652
+collision_layer = 3
+collision_mask = 4
+mass = 0.05
+linear_damp = 0.5
+angular_damp = 0.5
+script = ExtResource( 4 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D10"]
+shape = SubResource( 6 )
+
+[node name="PinJoint2D" type="PinJoint2D" parent="RigidBody2D10"]
+position = Vector2( -0.256622, -33.7704 )
+node_a = NodePath("..")
+node_b = NodePath("../../RigidBody2D14")
+script = ExtResource( 1 )
+Stiffness = 1.0
+Damping = 0.15
+
+[node name="RigidBody2D14" type="RigidBody2D" parent="."]
+position = Vector2( 463.934, 282.628 )
+rotation = 0.00704542
+collision_layer = 3
+collision_mask = 4
+mass = 0.05
+linear_damp = 0.5
+angular_damp = 0.5
+script = ExtResource( 4 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D14"]
+shape = SubResource( 6 )
+
+[node name="PinJoint2D" type="PinJoint2D" parent="RigidBody2D14"]
+position = Vector2( -0.256622, -33.7704 )
+node_a = NodePath("..")
+script = ExtResource( 1 )
+Stiffness = 30.0
+Damping = 1.5
+
+[node name="RigidBody2D7" type="RigidBody2D" parent="."]
+position = Vector2( 491.833, 392.521 )
+rotation = 0.531579
+collision_layer = 3
+collision_mask = 4
+mass = 0.1
+linear_damp = 0.5
+angular_damp = 0.5
+script = ExtResource( 4 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D7"]
+shape = SubResource( 4 )
+
+[node name="PinJoint2D" type="PinJoint2D" parent="RigidBody2D7"]
+position = Vector2( 0.487366, -39.7844 )
+node_a = NodePath("..")
+script = ExtResource( 1 )
+Stiffness = 30.0
+Damping = 1.5
+
+[node name="PinSpringJoint2D" type="PinJoint2D" parent="RigidBody2D7"]
+position = Vector2( -2.04596, -11.3342 )
+node_a = NodePath("..")
+node_b = NodePath("../../RigidBody2D10")
+script = ExtResource( 1 )
+Stiffness = 15.0
+
+[node name="RigidBody2D4" type="RigidBody2D" parent="."]
+position = Vector2( 654.871, 283.129 )
+rotation = 1.50202
+collision_layer = 3
+collision_mask = 4
+mass = 0.05
+linear_damp = 0.5
+angular_damp = 0.5
+script = ExtResource( 4 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D4"]
+shape = SubResource( 10 )
+
+[node name="PinJoint2D" type="PinJoint2D" parent="RigidBody2D4"]
+position = Vector2( 0.487366, -39.7844 )
+script = ExtResource( 1 )
+Stiffness = 30.0
+Damping = 1.5
+
+[node name="PinSpringJoint2D" type="PinJoint2D" parent="RigidBody2D4"]
+position = Vector2( -3.42072, -20.041 )
+node_a = NodePath("..")
+node_b = NodePath("../../RigidBody2D11")
+script = ExtResource( 1 )
+Stiffness = 15.0
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="PinJoint2D" type="PinJoint2D" parent="."]
+position = Vector2( 504.199, 674.772 )
+node_a = NodePath("../RigidBody2D17")
+node_b = NodePath("../StaticBody2D")
+script = ExtResource( 1 )
+Stiffness = 200.0
+Damping = 3.5
+
+[node name="Path2D" type="Path2D" parent="."]
+curve = SubResource( 11 )
+
+[node name="Line2D" type="Line2D" parent="Path2D"]
+position = Vector2( 754.713, 488.66 )
+points = PoolVector2Array( 106.613, 61.684, 99.2106, -17.8928, 139.924, -36.3989, 171.385, -58.6064, 178.787, -136.332, 180.383, -241.566, 175.633, -300.466 )
+width_curve = SubResource( 12 )
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="rb_ball4" type="RigidBody2D" parent="."]
+position = Vector2( 480.658, -12.8248 )
+mass = 0.13
+linear_damp = 0.01
+script = ExtResource( 5 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="rb_ball4"]
+shape = SubResource( 13 )
+
+[node name="Line2D" type="Line2D" parent="rb_ball4"]
+points = PoolVector2Array( -0.664673, 22.739, -0.664673, -0.328167 )
+width = 2.0
+
+[node name="rb_ball5" type="RigidBody2D" parent="."]
+position = Vector2( 566.98, -231.531 )
+mass = 0.13
+linear_damp = 0.01
+script = ExtResource( 5 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="rb_ball5"]
+shape = SubResource( 13 )
+
+[node name="Line2D" type="Line2D" parent="rb_ball5"]
+points = PoolVector2Array( -0.664673, 22.739, -0.664673, -0.328167 )
+width = 2.0
+
+[node name="rb_ball9" type="RigidBody2D" parent="."]
+position = Vector2( 565.49, -436.222 )
+mass = 0.13
+linear_damp = 0.01
+script = ExtResource( 5 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="rb_ball9"]
+shape = SubResource( 13 )
+
+[node name="Line2D" type="Line2D" parent="rb_ball9"]
+points = PoolVector2Array( -0.664673, 22.739, -0.664673, -0.328167 )
+width = 2.0
+
+[node name="line_node" parent="." instance=ExtResource( 7 )]
+[connection signal="area_shape_entered" from="ui/mouse_area" to="ui/level_menu" method="_on_mouse_area_area_shape_entered"]
+[connection signal="area_shape_exited" from="ui/mouse_area" to="ui/level_menu" method="_on_mouse_area_area_shape_exited"]

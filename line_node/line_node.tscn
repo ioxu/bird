@@ -1,0 +1,29 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://line_node.gd" type="Script" id=1]
+[ext_resource path="res://line_node/line_node.png" type="Texture" id=2]
+[ext_resource path="res://line_node/line_node_hover.png" type="Texture" id=3]
+[ext_resource path="res://line_node/line_node_activated.png" type="Texture" id=4]
+
+[sub_resource type="CircleShape2D" id=1]
+
+[node name="line_node" type="Area2D"]
+position = Vector2( 205.485, 473.003 )
+script = ExtResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+modulate = Color( 0.898039, 0.835294, 0.313726, 1 )
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 2 )
+
+[node name="Sprite_activated" type="Sprite" parent="."]
+visible = false
+texture = ExtResource( 4 )
+
+[node name="Sprite_hover" type="Sprite" parent="."]
+visible = false
+texture = ExtResource( 3 )
+[connection signal="area_shape_entered" from="." to="." method="_on_line_node_area_shape_entered"]
+[connection signal="area_shape_exited" from="." to="." method="_on_line_node_area_shape_exited"]
