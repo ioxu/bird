@@ -529,6 +529,7 @@ Stiffness = 200.0
 Damping = 3.5
 
 [node name="Path2D" type="Path2D" parent="."]
+visible = false
 curve = SubResource( 11 )
 
 [node name="Line2D" type="Line2D" parent="Path2D"]

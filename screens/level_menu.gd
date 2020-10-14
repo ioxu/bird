@@ -132,6 +132,10 @@ func mouse_clicked(pos):
 				line_segment.set("from_line_node_path", last_line_node_activated.get_path() )
 				line_segment.set("to_line_node_path", line_node.get_path() )				
 				$tree_nodes.add_child(line_segment)
+				line_node.connect_segment( line_segment )
+				last_line_node_activated.connect_segment( line_segment )
+
+			print("line_node ",line_node.get_name()," segments ", line_node.connected_segments)
 
 
 				

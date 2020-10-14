@@ -4,11 +4,16 @@ export var grabbable = true
 
 signal on_moved
 
+var connected_segments = []
+
 var builder_node_type = "line_node"
 var activated = false
 
 func _ready():
 	pass 
+
+func connect_segment(segment):
+	connected_segments.append(segment)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
