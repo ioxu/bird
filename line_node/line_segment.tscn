@@ -14,3 +14,12 @@ script = ExtResource( 1 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 self_modulate = Color( 0.313726, 0.964706, 0.2, 1 )
 shape = SubResource( 2 )
+
+[node name="insert_point_marker" type="Line2D" parent="."]
+points = PoolVector2Array( -12, 0, 12, 0 )
+width = 5.0
+default_color = Color( 0.992157, 0.992157, 0.992157, 0.466667 )
+begin_cap_mode = 2
+end_cap_mode = 2
+[connection signal="area_shape_entered" from="." to="." method="_on_line_segment_area_shape_entered"]
+[connection signal="area_shape_exited" from="." to="." method="_on_line_segment_area_shape_exited"]
