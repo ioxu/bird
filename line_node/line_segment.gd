@@ -10,8 +10,8 @@ var builder_node_type = "line_segment"
 
 onready var col_shape = $CollisionShape2D
 
-var from_line_node
-var to_line_node
+var from_line_node = null
+var to_line_node = null
 
 func _ready():
 	from_line_node = get_node(from_line_node_path)

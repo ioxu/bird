@@ -133,6 +133,8 @@ func mouse_left_clicked(pos):
 			#print("OVERLAP")
 			#mark overlapped node as parent, connect-to
 			var area = mouse_overlapping_areas[0].shape_owner_get_owner(0).get_parent()
+			
+			# left click on line_node
 			if area.get("builder_node_type") and area.builder_node_type == "line_node":
 				print(" add click builder_node_type ",area.get_path())
 
@@ -147,7 +149,44 @@ func mouse_left_clicked(pos):
 						last_line_node_activated.set_deactivated()
 					last_line_node_activated = area
 					last_line_node_activated.set_activated()
+			
+			# left click on line_segment
+			elif area.get("builder_node_type") and area.builder_node_type == "line_segment":
+				var area_owner = area.shape_owner_get_owner(0).get_owner()
+				var in_node = area.from_line_node
+				var out_node = area.to_line_node
+				print("CLICK LINE_SEGMENT ", area_owner.get_path() )
+				
+				if is_instance_valid(area):
+					area.destroy()
+					
+				#new line_node
+				var line_node = line_node_scene.instance()
+				line_node.set_global_position( mouse_area.position )
+				$tree_nodes.add_child(line_node)
+				line_node.set_activated()
+				
+				if is_instance_valid(last_line_node_activated):
+					last_line_node_activated.set_deactivated()
+					var line_segment = line_segment_scene.instance()
+					# segment 0
+					line_segment.set("from_line_node_path", in_node.get_path() )
+					line_segment.set("to_line_node_path", line_node.get_path() )				
+					$tree_nodes.add_child(line_segment)
+					in_node.connect_segment( line_segment )
+					line_node.connect_segment( line_segment )
 
+					# segment 1
+					line_segment = line_segment_scene.instance()
+					line_segment.set("from_line_node_path", line_node.get_path() )
+					line_segment.set("to_line_node_path", out_node.get_path() )				
+					$tree_nodes.add_child(line_segment)
+					line_node.connect_segment( line_segment )
+					out_node.connect_segment( line_segment )
+
+				last_line_node_activated = line_node
+				
+				
 		else:
 			# blank space, add new node and segment
 			var line_node = line_node_scene.instance()
@@ -156,7 +195,6 @@ func mouse_left_clicked(pos):
 			line_node.set_activated()
 			#last_line_node_activated = line_node
 			
-			#if last_line_node_activated != null:
 			if is_instance_valid(last_line_node_activated):
 				last_line_node_activated.set_deactivated()
 				var line_segment = line_segment_scene.instance()
@@ -168,10 +206,6 @@ func mouse_left_clicked(pos):
 				last_line_node_activated.connect_segment( line_segment )
 
 			print("line_node ",line_node.get_name()," segments ", line_node.connected_segments)
-
-
-				
-
 			last_line_node_activated = line_node
 
 func _on_mouse_area_area_shape_entered(area_id, area, area_shape, self_shape):
