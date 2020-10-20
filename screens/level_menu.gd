@@ -40,8 +40,18 @@ func _input(event):
 		if event.is_action_pressed("ui_down"):
 			print("level_menu down")
 
+		elif event.is_action_pressed("ui_edit_select_point"):
+			print("level_menu edit_select_point")
+			$tool_panel.switch_to_tool("tool_select")
+
 		elif event.is_action_pressed("ui_edit_add_point"):
 			print("level_menu edit_add_point")
+			$tool_panel.switch_to_tool("tool_add")
+
+		elif event.is_action_pressed("ui_edit_clear_points"):
+			print("level_menu edit_clear_points")
+			$tool_panel.switch_to_tool("tool_clear")
+
 
 		# defined here too because this _input used to
 		# consume the event
@@ -155,6 +165,7 @@ func mouse_left_clicked(pos):
 				var area_owner = area.shape_owner_get_owner(0).get_owner()
 				var in_node = area.from_line_node
 				var out_node = area.to_line_node
+				var segment_insert_pos = area_owner.get_node("insert_point_marker").get_global_position()
 				print("CLICK LINE_SEGMENT ", area_owner.get_path() )
 				
 				if is_instance_valid(area):
@@ -162,7 +173,7 @@ func mouse_left_clicked(pos):
 					
 				#new line_node
 				var line_node = line_node_scene.instance()
-				line_node.set_global_position( mouse_area.position )
+				line_node.set_global_position( segment_insert_pos )#mouse_area.position )
 				$tree_nodes.add_child(line_node)
 				line_node.set_activated()
 				

@@ -5,6 +5,7 @@ signal on_tool_changed
 # only one button on this panel can be in pressed state
 
 onready var toolbar_buttons = $MarginContainer/VBoxContainer.get_children()
+var _toolbar_buttons_by_name = {}
 
 onready var normal_tex = load("res://screens/edit_mode_edit.png")
 onready var hover_tex = load("res://screens/edit_mode_edit_hover.png")
@@ -14,16 +15,22 @@ onready var selected_hover_tex = load("res://screens/edit_mode_edit_selected_hov
 var selected_tool = null
 var previous_tool = null
 
+
 func _ready():
 	print("icons:")
 	for b in toolbar_buttons:
 		if b is TextureButton:
 			print("  ", b.name)
 			b.connect("button_pressed", self, "_on_button_pressed")
-	
+			_toolbar_buttons_by_name[b.name] = b
 	toolbar_buttons[0].selected = true
 	toolbar_buttons[0].texture_normal = selected_tex
 	toolbar_buttons[0].texture_hover = selected_tex
+
+
+func switch_to_tool(tool_str):
+	_on_button_pressed(_toolbar_buttons_by_name[tool_str])
+
 
 func _on_button_pressed(button):
 	print("tool: ",button.name)
