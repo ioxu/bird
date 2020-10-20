@@ -66,27 +66,11 @@ __meta__ = {
 [node name="tree_nodes" type="Node2D" parent="."]
 
 [node name="line_node" parent="tree_nodes" instance=ExtResource( 9 )]
-position = Vector2( 92.2219, 400.055 )
-
-[node name="line_node2" parent="tree_nodes" instance=ExtResource( 9 )]
-position = Vector2( 109.064, 439.003 )
-
-[node name="line_node3" parent="tree_nodes" instance=ExtResource( 9 )]
-position = Vector2( 129.064, 476.897 )
-
-[node name="line_node4" parent="tree_nodes" instance=ExtResource( 9 )]
-position = Vector2( 156.432, 511.634 )
-
-[node name="line_node5" parent="tree_nodes" instance=ExtResource( 9 )]
-position = Vector2( 178.538, 529.529 )
-
-[node name="line_node6" parent="tree_nodes" instance=ExtResource( 9 )]
-position = Vector2( 204.854, 541.108 )
+position = Vector2( -24.7788, 24.0527 )
 
 [node name="line_segment" parent="tree_nodes" instance=ExtResource( 11 )]
-position = Vector2( 124.001, 193.001 )
+position = Vector2( -25.9999, 56.0002 )
 from_line_node_path = NodePath("../line_node")
-to_line_node_path = NodePath("../line_node2")
 
 [node name="tool_panel" type="PanelContainer" parent="."]
 margin_left = 7.0

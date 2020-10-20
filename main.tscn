@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://addons/PinSpringJoint2D/PinSpringJoint2D.gd" type="Script" id=1]
 [ext_resource path="res://main.gd" type="Script" id=2]
@@ -6,7 +6,6 @@
 [ext_resource path="res://branch.gd" type="Script" id=4]
 [ext_resource path="res://ball.gd" type="Script" id=5]
 [ext_resource path="res://ui.gd" type="Script" id=6]
-[ext_resource path="res://line_node/line_node.tscn" type="PackedScene" id=7]
 [ext_resource path="res://mouse/pointer.png" type="Texture" id=10]
 [ext_resource path="res://screens/level_menu.tscn" type="PackedScene" id=11]
 
@@ -578,7 +577,5 @@ shape = SubResource( 13 )
 [node name="Line2D" type="Line2D" parent="rb_ball9"]
 points = PoolVector2Array( -0.664673, 22.739, -0.664673, -0.328167 )
 width = 2.0
-
-[node name="line_node" parent="." instance=ExtResource( 7 )]
 [connection signal="area_shape_entered" from="ui/mouse_area" to="ui/level_menu" method="_on_mouse_area_area_shape_entered"]
 [connection signal="area_shape_exited" from="ui/mouse_area" to="ui/level_menu" method="_on_mouse_area_area_shape_exited"]
