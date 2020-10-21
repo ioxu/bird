@@ -4,7 +4,7 @@ export(NodePath) var from_line_node_path
 export(NodePath) var to_line_node_path
 
 export var grabbable = false
-export var deletable = false
+export var deletable = true
 
 var builder_node_type = "line_segment"
 
@@ -15,29 +15,34 @@ var to_line_node = null
 
 func _ready():
 	from_line_node = get_node(from_line_node_path)
-	print("from_line_node ", from_line_node)
 	to_line_node = get_node(to_line_node_path)
-	print("to_line_node ", to_line_node)
-	
 	$insert_point_marker.visible = false
-	
 	if from_line_node:
+		print("line_segment._ready from_line_node ", from_line_node.get_path())
 		from_line_node.connect("on_moved", self, "_on_line_node_moved")
 		_on_line_node_moved(Vector2(0,0))
 	if to_line_node:
+		print("line_segment._ready to_line_node ", to_line_node.get_path())
 		to_line_node.connect("on_moved", self, "_on_line_node_moved")	
 		_on_line_node_moved(Vector2(0,0))
 
 
 func destroy():
+	set_process_input(false)
 	monitoring = false
 	monitorable = false
 	input_pickable = false
+	if is_instance_valid(from_line_node):
+		from_line_node.remove_segment(self)
+	if is_instance_valid(to_line_node):
+		to_line_node.remove_segment(self)
 	self.queue_free()
+	return true
+
 
 func _input(event):
 		if event is InputEventMouseMotion:
-			if from_line_node and to_line_node:
+			if is_instance_valid(from_line_node) and is_instance_valid(to_line_node):
 				$insert_point_marker.set_global_position(\
 					Geometry.get_closest_point_to_segment_2d(\
 						get_global_mouse_position(),\

@@ -126,8 +126,8 @@ margin_top = 36.0
 margin_right = 32.0
 margin_bottom = 68.0
 hint_tooltip = "add mode:
-LMB: add new point at end
-MMB: add point between
+LMB: add new point at end/add point on segment
+MMB: add segment
 RMB: remove point"
 mouse_filter = 1
 action_mode = 0

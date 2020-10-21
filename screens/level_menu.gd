@@ -17,10 +17,11 @@ var mouse_canvas_click_enabled = true
 export(NodePath) var mouse_area_path
 onready var mouse_area : Area2D = get_node(mouse_area_path)
 
-# line nodes
+# line stuff
 onready var line_node_scene = load("res://line_node/line_node.tscn")
 onready var line_segment_scene = load("res://line_node/line_segment.tscn")
 var last_line_node_activated = null
+
 
 func _ready():
 	print("mouse_area ",mouse_area.get_path())
@@ -28,8 +29,6 @@ func _ready():
 	active_tool = "select"
 	self.visible = false
 
-	# mouse area
-	
 
 func _input(event):
 
@@ -52,12 +51,10 @@ func _input(event):
 			print("level_menu edit_clear_points")
 			$tool_panel.switch_to_tool("tool_clear")
 
-
 		# defined here too because this _input used to
 		# consume the event
 		elif event is InputEventMouseMotion:
 			mouse_area.position = event.position
-
 
 		# mouse actions
 		if event is InputEventMouseButton\
@@ -74,6 +71,16 @@ func _input(event):
 					mouse_grabbed_areas.append(a)
 			mouse_left_clicked(mouse_clicked_pos)
 
+		# middle mouse
+		if event is InputEventMouseButton\
+			and event.button_index == BUTTON_MIDDLE\
+			and event.is_pressed():
+			
+			mouse_clicked_pos = event.position
+			mouse_status = "middle_clicked"
+			print("mouse_status ", mouse_status)
+			mouse_middle_clicked(event.position)
+
 		# right mouse
 		if event is InputEventMouseButton\
 			and event.button_index == BUTTON_RIGHT\
@@ -88,7 +95,6 @@ func _input(event):
 				if "deletable" in a and a.deletable:
 					mouse_deletable_areas.append(a)
 			mouse_right_clicked(mouse_clicked_pos)
-		
 
 		if mouse_status=="left_clicked" and event is InputEventMouseMotion:
 			mouse_status = "dragging"
@@ -112,35 +118,49 @@ func _input(event):
 		#get_tree().set_input_as_handled()
 
 func _process(delta):
-
 	if active_tool == "select":
-		#print("active tool: ", active_tool)
-
 		if mouse_status == "dragging":
-			#print("_process tool_select dragging ", mouse_drag_offset)
 			mouse_drag_offset = mouse_clicked_pos - mouse_area.position
-			#for a in mouse_overlapping_areas:
 			for a in mouse_grabbed_areas:
-				#print("grabbed area: ", a)
 				a.translate(  - (last_mouse_pos - mouse_area.position) )
 
 	last_mouse_pos = mouse_area.position
 
 
+func mouse_middle_clicked(pos):
+	if active_tool == "add":
+		# from last_line_node_activated, find connected segments
+		# from area, find connected segments
+		# if not in, then create new segment
+		
+		if mouse_overlapping_areas.size() > 0:
+			var area = mouse_overlapping_areas[0].shape_owner_get_owner(0).get_parent()
+			if area.get("builder_node_type") and area.builder_node_type == "line_node":
+				for s in last_line_node_activated.connected_segments:
+					if s in area.connected_segments:
+						print("s == s ", s )
+						return
+				#print("connect to ", area.get_path())
+				var line_segment = line_segment_scene.instance()
+				line_segment.set("from_line_node_path", last_line_node_activated.get_path() )
+				line_segment.set("to_line_node_path", area.get_path() )				
+				$tree_nodes.add_child(line_segment)
+				last_line_node_activated.connect_segment( line_segment )
+				area.connect_segment( line_segment )
+				print("line_node ",last_line_node_activated.get_name()," segments ", last_line_node_activated.connected_segments)
+
 func mouse_right_clicked(pos):
-	for a in mouse_deletable_areas:
-		if is_instance_valid(a):
-			a.destroy()
+	if active_tool == "add":
+		for a in mouse_deletable_areas:
+			print("about to destroy ",a.get_path())
+			if is_instance_valid(a):
+				a.destroy()
 
 
 func mouse_left_clicked(pos):
-	#print("mouse_clicked")
-	#print("mouse_canvas_click_enabled ", mouse_canvas_click_enabled)
 	if active_tool == "add" and mouse_canvas_click_enabled:
-		
 		# check if mouse is overlapping a line_node
 		if mouse_overlapping_areas.size() > 0:
-			#print("OVERLAP")
 			#mark overlapped node as parent, connect-to
 			var area = mouse_overlapping_areas[0].shape_owner_get_owner(0).get_parent()
 			
@@ -154,13 +174,12 @@ func mouse_left_clicked(pos):
 					last_line_node_activated = null
 				else:
 					print("ACTIVATE")
-					#if last_line_node_activated != null:
 					if is_instance_valid(last_line_node_activated):
 						last_line_node_activated.set_deactivated()
 					last_line_node_activated = area
 					last_line_node_activated.set_activated()
 			
-			# left click on line_segment
+			# left click on line_segment, insert point
 			elif area.get("builder_node_type") and area.builder_node_type == "line_segment":
 				var area_owner = area.shape_owner_get_owner(0).get_owner()
 				var in_node = area.from_line_node
@@ -173,7 +192,7 @@ func mouse_left_clicked(pos):
 					
 				#new line_node
 				var line_node = line_node_scene.instance()
-				line_node.set_global_position( segment_insert_pos )#mouse_area.position )
+				line_node.set_global_position( segment_insert_pos )
 				$tree_nodes.add_child(line_node)
 				line_node.set_activated()
 				
@@ -204,7 +223,6 @@ func mouse_left_clicked(pos):
 			line_node.set_global_position( mouse_area.position )
 			$tree_nodes.add_child(line_node)
 			line_node.set_activated()
-			#last_line_node_activated = line_node
 			
 			if is_instance_valid(last_line_node_activated):
 				last_line_node_activated.set_deactivated()
@@ -218,6 +236,7 @@ func mouse_left_clicked(pos):
 
 			print("line_node ",line_node.get_name()," segments ", line_node.connected_segments)
 			last_line_node_activated = line_node
+
 
 func _on_mouse_area_area_shape_entered(area_id, area, area_shape, self_shape):
 	if self.visible:
@@ -235,12 +254,10 @@ func _on_mouse_area_area_shape_exited(area_id, area, area_shape, self_shape):
 
 func _on_tool_panel_mouse_entered():
 	mouse_canvas_click_enabled = false
-	#print("mouse_canvas_click_enabled ",mouse_canvas_click_enabled)
 
 
 func _on_tool_panel_mouse_exited():
 	mouse_canvas_click_enabled = true
-	#print("mouse_canvas_click_enabled ",mouse_canvas_click_enabled)
 
 
 func toggle_visibility():
