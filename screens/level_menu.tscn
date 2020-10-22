@@ -107,9 +107,9 @@ self_modulate = Color( 1, 1, 1, 0.470588 )
 margin_right = 32.0
 margin_bottom = 32.0
 hint_tooltip = "Edit mode:
-LMB: add new point at end
+LMB: move node
 MMB: add new branch
-RMB: something something"
+RMB: context menu"
 mouse_filter = 1
 action_mode = 0
 texture_normal = ExtResource( 3 )

@@ -29,6 +29,8 @@ texture = ExtResource( 3 )
 
 [node name="Sprite_anchor" type="Sprite" parent="."]
 visible = false
+modulate = Color( 1, 1, 1, 0.615686 )
+z_index = 100
 texture = ExtResource( 5 )
 [connection signal="area_shape_entered" from="." to="." method="_on_line_node_area_shape_entered"]
 [connection signal="area_shape_exited" from="." to="." method="_on_line_node_area_shape_exited"]
