@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://screens/level_menu.gd" type="Script" id=1]
 [ext_resource path="res://screens/edit_mode_edit_selected.png" type="Texture" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://line_node/line_node.tscn" type="PackedScene" id=9]
 [ext_resource path="res://screens/edit_mode_tool_clear.png" type="Texture" id=10]
 [ext_resource path="res://line_node/line_segment.tscn" type="PackedScene" id=11]
+[ext_resource path="res://screens/tool_select_context_popup.gd" type="Script" id=12]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0, 0, 0, 0.623529 )
@@ -167,6 +168,12 @@ temporary = true
 [node name="icon" type="Sprite" parent="tool_panel/MarginContainer/VBoxContainer/tool_clear"]
 position = Vector2( 16, 16 )
 texture = ExtResource( 10 )
+
+[node name="tool_select_context_popup" type="PopupMenu" parent="."]
+margin_top = -64.0
+margin_right = 29.0
+margin_bottom = -44.0
+script = ExtResource( 12 )
 [connection signal="mouse_entered" from="tool_panel" to="." method="_on_tool_panel_mouse_entered"]
 [connection signal="mouse_exited" from="tool_panel" to="." method="_on_tool_panel_mouse_exited"]
 [connection signal="on_tool_changed" from="tool_panel" to="." method="_on_tool_panel_on_tool_changed"]

@@ -2,6 +2,7 @@ extends Area2D
 
 export var grabbable = true
 export var deletable = true
+export var anchor = false
 signal on_moved
 
 var connected_segments = []
@@ -23,6 +24,14 @@ func remove_segment(segment):
 	print("remove segement ", segment.get_path(), " from ", self.get_path())	
 	connected_segments.remove(connected_segments.find(segment))
 
+
+func set_as_anchor(is_anchor):
+	if is_anchor:
+		anchor = true
+		$Sprite_anchor.show()
+	else:
+		anchor = false
+		$Sprite_anchor.hide()
 
 func destroy():
 	set_process_input(false)

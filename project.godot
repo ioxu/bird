@@ -19,6 +19,10 @@ config/name="Bird"
 run/main_scene="res://main.tscn"
 config/icon="res://images/thumbnail.png"
 
+[display]
+
+window/size/resizable=false
+
 [editor_plugins]
 
 enabled=PoolStringArray( "PinSpringJoint2D" )

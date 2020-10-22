@@ -21,6 +21,7 @@ onready var mouse_area : Area2D = get_node(mouse_area_path)
 onready var line_node_scene = load("res://line_node/line_node.tscn")
 onready var line_segment_scene = load("res://line_node/line_segment.tscn")
 var last_line_node_activated = null
+var last_line_node_right_clicked = null
 
 
 func _ready():
@@ -28,6 +29,9 @@ func _ready():
 	active_tool_label.text = "select"
 	active_tool = "select"
 	self.visible = false
+
+	# select tool context menu
+	$tool_select_context_popup.connect("id_pressed", self, "_on_tool_select_context_popup_selected")
 
 
 func _input(event):
@@ -155,6 +159,16 @@ func mouse_right_clicked(pos):
 			print("about to destroy ",a.get_path())
 			if is_instance_valid(a):
 				a.destroy()
+	
+	elif active_tool == "select":
+		if mouse_overlapping_areas.size() > 0:
+			var area = mouse_overlapping_areas[0].shape_owner_get_owner(0).get_parent()
+			if area.get("builder_node_type") and area.builder_node_type == "line_node":
+				print("popup show ", $tool_select_context_popup.get_path())
+				$tool_select_context_popup.rect_position = area.get_global_position()
+				$tool_select_context_popup.popup()
+				last_line_node_right_clicked = area
+		
 
 
 func mouse_left_clicked(pos):
@@ -237,6 +251,18 @@ func mouse_left_clicked(pos):
 			print("line_node ",line_node.get_name()," segments ", line_node.connected_segments)
 			last_line_node_activated = line_node
 
+
+func _on_tool_select_context_popup_selected(id):
+	print("tool select context popup selected id ", id)
+	# 0 : set line_node as anchor
+	if id == 0:
+		print("  - set as anchor (on ", last_line_node_right_clicked.get_path(), ")")
+		if last_line_node_right_clicked.anchor:
+			last_line_node_right_clicked.set_as_anchor(false)
+		else:
+			last_line_node_right_clicked.set_as_anchor(true)
+		
+	last_line_node_right_clicked = null
 
 func _on_mouse_area_area_shape_entered(area_id, area, area_shape, self_shape):
 	if self.visible:

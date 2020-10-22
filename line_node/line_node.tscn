@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://line_node.gd" type="Script" id=1]
 [ext_resource path="res://line_node/line_node.png" type="Texture" id=2]
 [ext_resource path="res://line_node/line_node_hover.png" type="Texture" id=3]
 [ext_resource path="res://line_node/line_node_activated.png" type="Texture" id=4]
+[ext_resource path="res://screens/edit_mode_anchor.png" type="Texture" id=5]
 
 [sub_resource type="CircleShape2D" id=1]
 
@@ -25,5 +26,9 @@ texture = ExtResource( 4 )
 [node name="Sprite_hover" type="Sprite" parent="."]
 visible = false
 texture = ExtResource( 3 )
+
+[node name="Sprite_anchor" type="Sprite" parent="."]
+visible = false
+texture = ExtResource( 5 )
 [connection signal="area_shape_entered" from="." to="." method="_on_line_node_area_shape_entered"]
 [connection signal="area_shape_exited" from="." to="." method="_on_line_node_area_shape_exited"]
