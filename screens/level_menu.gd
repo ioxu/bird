@@ -23,6 +23,11 @@ onready var line_segment_scene = load("res://line_node/line_segment.tscn")
 var last_line_node_activated = null
 var last_line_node_right_clicked = null
 
+# committing stuff
+const PhysicsUtils = preload("res://lib/physics_utils.gd")
+onready var physics_utils = PhysicsUtils.new()
+export(NodePath) var scene_body_path
+
 
 func _ready():
 	print("mouse_area ",mouse_area.get_path())
@@ -315,3 +320,5 @@ func commit_drawing():
 	print("  do commit drawing ..")
 	# convert $tree_nodes's children to dynamic bode
 	# under ../scene_body
+
+	physics_utils.convert_drawing_to_scene( $tree_nodes.get_path(), scene_body_path)
