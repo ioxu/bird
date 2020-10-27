@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://screens/level_menu.gd" type="Script" id=1]
 [ext_resource path="res://screens/edit_mode_edit_selected.png" type="Texture" id=2]
@@ -12,6 +12,7 @@
 [ext_resource path="res://screens/edit_mode_tool_clear.png" type="Texture" id=10]
 [ext_resource path="res://line_node/line_segment.tscn" type="PackedScene" id=11]
 [ext_resource path="res://screens/tool_select_context_popup.gd" type="Script" id=12]
+[ext_resource path="res://screens/edit_mode_tool_commit.png" type="Texture" id=13]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0, 0, 0, 0.623529 )
@@ -106,7 +107,7 @@ custom_constants/separation = 4
 self_modulate = Color( 1, 1, 1, 0.470588 )
 margin_right = 32.0
 margin_bottom = 32.0
-hint_tooltip = "Edit mode:
+hint_tooltip = "(S) Edit mode:
 LMB: move node
 MMB: add new branch
 RMB: context menu"
@@ -126,10 +127,10 @@ self_modulate = Color( 1, 1, 1, 0.470588 )
 margin_top = 36.0
 margin_right = 32.0
 margin_bottom = 68.0
-hint_tooltip = "add mode:
+hint_tooltip = "(A) Add mode:
 LMB: add new point at end/add point on segment
 MMB: add segment
-RMB: remove point"
+RMB: remove point or segment"
 mouse_filter = 1
 action_mode = 0
 texture_normal = ExtResource( 3 )
@@ -153,10 +154,40 @@ self_modulate = Color( 1, 1, 1, 0.470588 )
 margin_top = 91.0
 margin_right = 32.0
 margin_bottom = 123.0
-hint_tooltip = "add mode:
-LMB: add new point at end
-MMB: add new branch
-RMB: something something"
+hint_tooltip = "clear all drawings"
+mouse_filter = 1
+action_mode = 0
+texture_normal = ExtResource( 3 )
+texture_pressed = ExtResource( 2 )
+texture_hover = ExtResource( 4 )
+script = ExtResource( 6 )
+__meta__ = {
+"_editor_description_": ""
+}
+temporary = true
+
+[node name="icon" type="Sprite" parent="tool_panel/MarginContainer/VBoxContainer/tool_clear"]
+position = Vector2( 16, 16 )
+texture = ExtResource( 10 )
+
+[node name="HSeparator2" type="HSeparator" parent="tool_panel/MarginContainer/VBoxContainer"]
+visible = false
+margin_top = 127.0
+margin_right = 32.0
+margin_bottom = 142.0
+custom_styles/separator = SubResource( 3 )
+custom_constants/separation = 15
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="tool_commit" type="TextureButton" parent="tool_panel/MarginContainer/VBoxContainer"]
+visible = false
+self_modulate = Color( 1, 1, 1, 0.470588 )
+margin_top = 146.0
+margin_right = 32.0
+margin_bottom = 178.0
+hint_tooltip = "commit tree drawing to scene"
 mouse_filter = 1
 action_mode = 0
 texture_normal = ExtResource( 3 )
@@ -165,9 +196,9 @@ texture_hover = ExtResource( 4 )
 script = ExtResource( 6 )
 temporary = true
 
-[node name="icon" type="Sprite" parent="tool_panel/MarginContainer/VBoxContainer/tool_clear"]
+[node name="icon" type="Sprite" parent="tool_panel/MarginContainer/VBoxContainer/tool_commit"]
 position = Vector2( 16, 16 )
-texture = ExtResource( 10 )
+texture = ExtResource( 13 )
 
 [node name="tool_select_context_popup" type="PopupMenu" parent="."]
 margin_top = -64.0
@@ -180,3 +211,4 @@ script = ExtResource( 12 )
 [connection signal="pressed" from="tool_panel/MarginContainer/VBoxContainer/tool_select" to="tool_panel/MarginContainer/VBoxContainer/tool_select" method="_on_toolbar_button_pressed"]
 [connection signal="pressed" from="tool_panel/MarginContainer/VBoxContainer/tool_add" to="tool_panel/MarginContainer/VBoxContainer/tool_add" method="_on_toolbar_button_pressed"]
 [connection signal="pressed" from="tool_panel/MarginContainer/VBoxContainer/tool_clear" to="tool_panel/MarginContainer/VBoxContainer/tool_clear" method="_on_toolbar_button_pressed"]
+[connection signal="pressed" from="tool_panel/MarginContainer/VBoxContainer/tool_commit" to="tool_panel/MarginContainer/VBoxContainer/tool_commit" method="_on_toolbar_button_pressed"]

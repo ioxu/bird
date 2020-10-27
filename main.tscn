@@ -81,6 +81,8 @@ shape = SubResource( 1 )
 [node name="Sprite" type="Sprite" parent="ui/mouse_area"]
 texture = ExtResource( 10 )
 
+[node name="scene_body" type="StaticBody2D" parent="."]
+
 [node name="RigidBody2D" type="RigidBody2D" parent="."]
 position = Vector2( 531.737, 473.807 )
 rotation = 0.458659

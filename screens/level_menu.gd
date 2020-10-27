@@ -287,6 +287,9 @@ func _on_tool_panel_mouse_exited():
 
 
 func toggle_visibility():
+	if self.visible:
+		print("commit drawing to scene ..")
+		self.commit_drawing()
 	self.visible = !self.visible
 
 
@@ -302,3 +305,13 @@ func _on_tool_panel_on_tool_changed(_tool):
 		for i in $tree_nodes.get_children():
 			i.queue_free()
 
+	if active_tool == "commit":
+		print("  commit drawing to scene ..")
+		last_line_node_activated = null
+		commit_drawing()
+
+
+func commit_drawing():
+	print("  do commit drawing ..")
+	# convert $tree_nodes's children to dynamic bode
+	# under ../scene_body
