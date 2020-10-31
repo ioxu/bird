@@ -1,11 +1,16 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://line_node/line_segment.gd" type="Script" id=1]
+[ext_resource path="res://fonts/04B_03B_.TTF" type="DynamicFontData" id=2]
 
 [sub_resource type="CanvasItemMaterial" id=1]
 blend_mode = 1
 
 [sub_resource type="RectangleShape2D" id=2]
+
+[sub_resource type="DynamicFont" id=3]
+size = 8
+font_data = ExtResource( 2 )
 
 [node name="line_segment" type="Area2D"]
 material = SubResource( 1 )
@@ -21,5 +26,18 @@ width = 5.0
 default_color = Color( 0.992157, 0.992157, 0.992157, 0.466667 )
 begin_cap_mode = 2
 end_cap_mode = 2
+
+[node name="labels" type="Node2D" parent="."]
+z_index = 1000
+
+[node name="segment_label" type="Label" parent="labels"]
+margin_right = 56.0
+margin_bottom = 14.0
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color = Color( 0.67451, 0.67451, 0.67451, 0.658824 )
+text = "segment ID: 8"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="area_shape_entered" from="." to="." method="_on_line_segment_area_shape_entered"]
 [connection signal="area_shape_exited" from="." to="." method="_on_line_segment_area_shape_exited"]

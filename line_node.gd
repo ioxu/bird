@@ -11,8 +11,8 @@ var builder_node_type = "line_node"
 var activated = false
 
 
-#func _ready():
-#	pass 
+func _ready():
+	$labels/node_label.text = self.get_name()
 
 
 func connect_segment(segment):

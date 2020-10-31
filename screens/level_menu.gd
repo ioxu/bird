@@ -22,6 +22,7 @@ onready var line_node_scene = load("res://line_node/line_node.tscn")
 onready var line_segment_scene = load("res://line_node/line_segment.tscn")
 var last_line_node_activated = null
 var last_line_node_right_clicked = null
+var show_insert_point_marker = false
 
 # committing stuff
 const PhysicsUtils = preload("res://lib/physics_utils.gd")
@@ -303,6 +304,12 @@ func _on_tool_panel_on_tool_changed(_tool):
 	active_tool.erase(0,5)
 	active_tool_label.text = active_tool
 	print("active tool:", active_tool)
+
+	if active_tool == "select":
+		show_insert_point_marker = false
+	
+	if active_tool == "add":
+		show_insert_point_marker = true
 	
 	if active_tool == "clear":
 		print("  CLEAR ALL POINTS")

@@ -13,6 +13,7 @@ onready var col_shape = $CollisionShape2D
 var from_line_node = null
 var to_line_node = null
 
+
 func _ready():
 	from_line_node = get_node(from_line_node_path)
 	to_line_node = get_node(to_line_node_path)
@@ -25,6 +26,8 @@ func _ready():
 		print("line_segment._ready to_line_node ", to_line_node.get_path())
 		to_line_node.connect("on_moved", self, "_on_line_node_moved")	
 		_on_line_node_moved(Vector2(0,0))
+		
+	$labels/segment_label.text = self.get_name()
 
 
 func destroy():
@@ -58,15 +61,17 @@ func _on_line_node_moved(vec):
 		self.position = from_node.position + ( to_node.position - from_node.position ) / 2.0
 		self.rotation = (from_node.position-to_node.position).normalized().angle() + PI/2
 		col_shape.set_scale( Vector2( 0.5, ((to_node.position - from_node.position).length() -23.0 ) / 20.0 )  )
+		$labels.set_global_rotation(0)
+		$labels.set_global_position( Vector2( int(position.x), int(position.y)) )
 
 
 func _on_line_segment_area_shape_entered(area_id, area, area_shape, self_shape):
-	if area.name == "mouse_area":
+	if area.name == "mouse_area" and self.get_node("../../").show_insert_point_marker == true:
 		$insert_point_marker.visible = true
 		set_process_input(true)
 
 
 func _on_line_segment_area_shape_exited(area_id, area, area_shape, self_shape):
-	if area.name == "mouse_area":
+	if area.name == "mouse_area" and self.get_node("../../").show_insert_point_marker == true:
 		$insert_point_marker.visible = false
 		set_process_input(false)
