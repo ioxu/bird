@@ -159,6 +159,7 @@ func mouse_middle_clicked(pos):
 				area.connect_segment( line_segment )
 				print("line_node ",last_line_node_activated.get_name()," segments ", last_line_node_activated.connected_segments)
 
+
 func mouse_right_clicked(pos):
 	if active_tool == "add":
 		for a in mouse_deletable_areas:
@@ -174,7 +175,6 @@ func mouse_right_clicked(pos):
 				$tool_select_context_popup.rect_position = area.get_global_position()
 				$tool_select_context_popup.popup()
 				last_line_node_right_clicked = area
-		
 
 
 func mouse_left_clicked(pos):
@@ -269,6 +269,7 @@ func _on_tool_select_context_popup_selected(id):
 			last_line_node_right_clicked.set_as_anchor(true)
 		
 	last_line_node_right_clicked = null
+
 
 func _on_mouse_area_area_shape_entered(area_id, area, area_shape, self_shape):
 	if self.visible:

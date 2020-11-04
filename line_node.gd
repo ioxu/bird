@@ -17,11 +17,13 @@ func _ready():
 
 func connect_segment(segment):
 	print("connect segment", segment.get_path(), " to ", self.get_path())
+	print("-> connected_segments ", connected_segments)
 	connected_segments.append(segment)
 	self.translate(Vector2(0,0))
 
 func remove_segment(segment):
-	print("remove segement ", segment.get_path(), " from ", self.get_path())	
+	print("remove segement ", segment.get_path(), " from ", self.get_path())
+	print("-> connected_segments ", connected_segments)
 	connected_segments.remove(connected_segments.find(segment))
 	self.translate(Vector2(0,0))
 
@@ -48,23 +50,30 @@ func destroy():
 			o.destroy()
 	queue_free()
 
+
 func translate(vec):
 	.translate(vec)
 	emit_signal("on_moved", self.position)
-	#print("line_node.translate")
+	update_label_positions()
+
+
+func update_label_positions():
+	# update labels
 	if len(connected_segments) == 0:
 		$labels/order_label.rect_position = Vector2(-20,-20)
 	elif len(connected_segments) > 0:
 		var av_vec : Vector2
 		var n_vectors := 0
 		for i in range(len(connected_segments)):
-			av_vec +=\
-				(self.position -\
-				get_next_node_by_segment(connected_segments[i]).position).normalized()
-			n_vectors += 1
+			if connected_segments[i] != null:
+				av_vec +=\
+					(self.position -\
+					get_next_node_by_segment(connected_segments[i]).position).normalized()
+				n_vectors += 1
 		av_vec = (av_vec / n_vectors).normalized()
 		$labels/order_label.rect_position =\
 			av_vec * Vector2(15,15) - ($labels/order_label.rect_size / 2.0)
+
 
 func get_next_node_by_segment(segment):
 	if self == segment.from_line_node:
