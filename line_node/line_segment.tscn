@@ -31,6 +31,7 @@ end_cap_mode = 2
 z_index = 1000
 
 [node name="segment_label" type="Label" parent="labels"]
+visible = false
 margin_right = 56.0
 margin_bottom = 14.0
 custom_fonts/font = SubResource( 3 )

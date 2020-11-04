@@ -66,12 +66,18 @@ func _on_line_node_moved(vec):
 
 
 func _on_line_segment_area_shape_entered(area_id, area, area_shape, self_shape):
-	if area.name == "mouse_area" and self.get_node("../../").show_insert_point_marker == true:
-		$insert_point_marker.visible = true
+	if area.name == "mouse_area":
+		if self.get_node("../../").show_insert_point_marker == true:
+			$insert_point_marker.visible = true
+
+		$labels/segment_label.visible = true
 		set_process_input(true)
 
 
 func _on_line_segment_area_shape_exited(area_id, area, area_shape, self_shape):
-	if area.name == "mouse_area" and self.get_node("../../").show_insert_point_marker == true:
-		$insert_point_marker.visible = false
+	if area.name == "mouse_area":
+		if self.get_node("../../").show_insert_point_marker == true:
+			$insert_point_marker.visible = false
+
+		$labels/segment_label.visible = false
 		set_process_input(false)

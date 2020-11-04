@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://line_node.gd" type="Script" id=1]
 [ext_resource path="res://line_node/line_node.png" type="Texture" id=2]
@@ -13,6 +13,10 @@
 size = 8
 outline_size = 3
 outline_color = Color( 0.333333, 0.333333, 0.333333, 0.666667 )
+font_data = ExtResource( 6 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 10
 font_data = ExtResource( 6 )
 
 [node name="line_node" type="Area2D"]
@@ -41,14 +45,25 @@ z_index = 100
 texture = ExtResource( 5 )
 
 [node name="labels" type="Node2D" parent="."]
-position = Vector2( 7, 7 )
 z_index = 1000
 
 [node name="node_label" type="Label" parent="labels"]
-margin_right = 40.0
-margin_bottom = 14.0
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 49.0
+margin_bottom = 21.0
 custom_fonts/font = SubResource( 2 )
 text = "node label"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="order_label" type="Label" parent="labels"]
+margin_right = 3.0
+margin_bottom = 11.0
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color = Color( 0.972549, 0.972549, 0.972549, 0.392157 )
+text = "1"
 __meta__ = {
 "_edit_use_anchors_": false
 }
