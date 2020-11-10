@@ -25,8 +25,8 @@ var last_line_node_right_clicked = null
 var show_insert_point_marker = false
 
 # committing stuff
-const PhysicsUtils = preload("res://lib/physics_utils.gd")
-onready var physics_utils = PhysicsUtils.new()
+const GraphUtils = preload("res://lib/graph_utils.gd")
+onready var graph_utils = GraphUtils.new()
 export(NodePath) var scene_body_path
 
 
@@ -242,6 +242,7 @@ func mouse_left_clicked(pos):
 			var line_node = line_node_scene.instance()
 			line_node.set_global_position( mouse_area.position )
 			$tree_nodes.add_child(line_node)
+			line_node.connect("on_moved", self, "_on_line_node_moved")
 			line_node.set_activated()
 			
 			if is_instance_valid(last_line_node_activated):
@@ -323,10 +324,15 @@ func _on_tool_panel_on_tool_changed(_tool):
 		last_line_node_activated = null
 		commit_drawing()
 
+func _on_line_node_moved(vec):
+	# update graph
+	var graph = graph_utils.parse_drawing($tree_nodes)
+
+
 
 func commit_drawing():
 	print("  do commit drawing ..")
 	# convert $tree_nodes's children to dynamic bode
 	# under ../scene_body
 
-	physics_utils.convert_drawing_to_scene( $tree_nodes.get_path(), scene_body_path)
+	graph_utils.convert_drawing_to_scene( $tree_nodes.get_path(), scene_body_path)

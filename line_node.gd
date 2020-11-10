@@ -60,7 +60,8 @@ func translate(vec):
 func update_label_positions():
 	# update labels
 	if len(connected_segments) == 0:
-		$labels/order_label.rect_position = Vector2(-20,-20)
+		#$labels/order_label.rect_position = Vector2(-20,-20)
+		$labels/graph_labels.position = Vector2(-20,-20)
 	elif len(connected_segments) > 0:
 		var av_vec : Vector2
 		var n_vectors := 0
@@ -71,8 +72,10 @@ func update_label_positions():
 					get_next_node_by_segment(connected_segments[i]).position).normalized()
 				n_vectors += 1
 		av_vec = (av_vec / n_vectors).normalized()
-		$labels/order_label.rect_position =\
-			av_vec * Vector2(15,15) - ($labels/order_label.rect_size / 2.0)
+		#$labels/order_label.rect_position =\
+		$labels/graph_labels.position =\
+			av_vec * Vector2( 25, 25) -\
+			 ($labels/graph_labels/PanelContainer.rect_size / 2.0)
 
 
 func get_next_node_by_segment(segment):

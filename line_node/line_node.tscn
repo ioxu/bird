@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://line_node.gd" type="Script" id=1]
 [ext_resource path="res://line_node/line_node.png" type="Texture" id=2]
@@ -15,7 +15,9 @@ outline_size = 3
 outline_color = Color( 0.333333, 0.333333, 0.333333, 0.666667 )
 font_data = ExtResource( 6 )
 
-[sub_resource type="DynamicFont" id=3]
+[sub_resource type="StyleBoxEmpty" id=3]
+
+[sub_resource type="DynamicFont" id=4]
 size = 10
 font_data = ExtResource( 6 )
 
@@ -58,12 +60,38 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="order_label" type="Label" parent="labels"]
+[node name="graph_labels" type="Node2D" parent="labels"]
+
+[node name="PanelContainer" type="PanelContainer" parent="labels/graph_labels"]
 margin_right = 3.0
 margin_bottom = 11.0
-custom_fonts/font = SubResource( 3 )
+custom_styles/panel = SubResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="labels/graph_labels/PanelContainer"]
+margin_right = 37.0
+margin_bottom = 26.0
+custom_constants/separation = -1
+
+[node name="order_label" type="Label" parent="labels/graph_labels/PanelContainer/VBoxContainer"]
+margin_right = 37.0
+margin_bottom = 11.0
+custom_fonts/font = SubResource( 4 )
 custom_colors/font_color = Color( 0.972549, 0.972549, 0.972549, 0.392157 )
-text = "1"
+text = "order: 1"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="depth_label" type="Label" parent="labels/graph_labels/PanelContainer/VBoxContainer"]
+margin_top = 10.0
+margin_right = 37.0
+margin_bottom = 21.0
+custom_fonts/font = SubResource( 4 )
+custom_colors/font_color = Color( 0.972549, 0.972549, 0.972549, 0.392157 )
+text = "depth: 1"
 __meta__ = {
 "_edit_use_anchors_": false
 }

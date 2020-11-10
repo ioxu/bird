@@ -45,10 +45,10 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="."]
-margin_left = 19.3854
-margin_top = 16.8006
-margin_right = 59.3854
-margin_bottom = 30.8006
+margin_left = 9.936
+margin_top = 169.881
+margin_right = 81.936
+margin_bottom = 183.881
 text = "level menu"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -68,10 +68,10 @@ __meta__ = {
 [node name="tree_nodes" type="Node2D" parent="."]
 
 [node name="line_node" parent="tree_nodes" instance=ExtResource( 9 )]
-position = Vector2( -24.7788, 24.0527 )
+position = Vector2( -96.6976, 18.8086 )
 
 [node name="line_segment" parent="tree_nodes" instance=ExtResource( 11 )]
-position = Vector2( -25.9999, 56.0002 )
+position = Vector2( -96.0458, 56.0002 )
 from_line_node_path = NodePath("../line_node")
 
 [node name="tool_panel" type="PanelContainer" parent="."]

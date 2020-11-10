@@ -118,7 +118,6 @@ Stiffness = 30.0
 [node name="RigidBody2D17" type="RigidBody2D" parent="Node2D"]
 position = Vector2( 503.105, 602.301 )
 rotation = -0.0190229
-scale = Vector2( 1, 1 )
 collision_layer = 3
 collision_mask = 4
 mass = 0.35
@@ -140,7 +139,6 @@ Damping = 1.5
 [node name="RigidBody2D2" type="RigidBody2D" parent="Node2D"]
 position = Vector2( 558.011, 376.672 )
 rotation = -0.0878643
-scale = Vector2( 1, 1 )
 collision_layer = 3
 collision_mask = 4
 mass = 0.2
@@ -240,7 +238,6 @@ Damping = 1.5
 [node name="RigidBody2D8" type="RigidBody2D" parent="Node2D"]
 position = Vector2( 399.119, 363.512 )
 rotation = -1.39084
-scale = Vector2( 1, 1 )
 collision_layer = 3
 collision_mask = 4
 mass = 0.1
@@ -262,7 +259,6 @@ Damping = 1.5
 [node name="RigidBody2D9" type="RigidBody2D" parent="Node2D"]
 position = Vector2( 380.32, 323.582 )
 rotation = 0.0172665
-scale = Vector2( 1, 1 )
 collision_layer = 3
 collision_mask = 4
 mass = 0.05
@@ -372,7 +368,6 @@ script = ExtResource( 1 )
 [node name="RigidBody2D16" type="RigidBody2D" parent="Node2D"]
 position = Vector2( 583.123, 121.741 )
 rotation = 0.126264
-scale = Vector2( 1, 1 )
 collision_layer = 3
 collision_mask = 4
 mass = 0.05
@@ -416,7 +411,6 @@ Damping = 0.15
 [node name="RigidBody2D18" type="RigidBody2D" parent="Node2D"]
 position = Vector2( 521.425, 97.8576 )
 rotation = 0.126264
-scale = Vector2( 1, 1 )
 collision_layer = 3
 collision_mask = 4
 mass = 0.05
