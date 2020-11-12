@@ -162,10 +162,13 @@ func mouse_middle_clicked(pos):
 
 func mouse_right_clicked(pos):
 	if active_tool == "add":
+		var d_size = mouse_deletable_areas.size()
 		for a in mouse_deletable_areas:
 			print("about to destroy ",a.get_path())
 			if is_instance_valid(a):
 				a.destroy()
+		if d_size > 0:
+			$graph_manager._on_topology_changed()
 	
 	elif active_tool == "select":
 		if mouse_overlapping_areas.size() > 0:
@@ -214,6 +217,7 @@ func mouse_left_clicked(pos):
 				var line_node = line_node_scene.instance()
 				line_node.set_global_position( segment_insert_pos )
 				$tree_nodes.add_child(line_node)
+				line_node.connect("on_moved", $graph_manager, "_on_line_node_moved")
 				line_node.set_activated()
 				
 				if is_instance_valid(last_line_node_activated):
@@ -236,13 +240,15 @@ func mouse_left_clicked(pos):
 
 				last_line_node_activated = line_node
 				
+				$graph_manager._on_topology_changed()
 				
 		else:
 			# blank space, add new node and segment
 			var line_node = line_node_scene.instance()
 			line_node.set_global_position( mouse_area.position )
 			$tree_nodes.add_child(line_node)
-			line_node.connect("on_moved", self, "_on_line_node_moved")
+			#line_node.connect("on_moved", self, "_on_line_node_moved")
+			line_node.connect("on_moved", $graph_manager, "_on_line_node_moved")
 			line_node.set_activated()
 			
 			if is_instance_valid(last_line_node_activated):
@@ -257,7 +263,8 @@ func mouse_left_clicked(pos):
 
 			print("line_node ",line_node.get_name()," segments ", line_node.connected_segments)
 			last_line_node_activated = line_node
-
+			
+			$graph_manager._on_topology_changed()
 
 func _on_tool_select_context_popup_selected(id):
 	print("tool select context popup selected id ", id)
@@ -266,8 +273,10 @@ func _on_tool_select_context_popup_selected(id):
 		print("  - set as anchor (on ", last_line_node_right_clicked.get_path(), ")")
 		if last_line_node_right_clicked.anchor:
 			last_line_node_right_clicked.set_as_anchor(false)
+			$graph_manager.remove_anchor(last_line_node_right_clicked)
 		else:
 			last_line_node_right_clicked.set_as_anchor(true)
+			$graph_manager.add_anchor(last_line_node_right_clicked)
 		
 	last_line_node_right_clicked = null
 
@@ -324,12 +333,12 @@ func _on_tool_panel_on_tool_changed(_tool):
 		last_line_node_activated = null
 		commit_drawing()
 
-func _on_line_node_moved(vec):
-	# update graph
-	var graph = graph_utils.parse_drawing($tree_nodes)
-
-
-
+#func _on_line_node_moved(node, vec):
+#	# update graph
+#	var graph = graph_utils.parse_drawing($tree_nodes)
+#
+#
+#
 func commit_drawing():
 	print("  do commit drawing ..")
 	# convert $tree_nodes's children to dynamic bode

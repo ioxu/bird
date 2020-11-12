@@ -21,11 +21,11 @@ func _ready():
 	if from_line_node:
 		print("line_segment._ready from_line_node ", from_line_node.get_path())
 		from_line_node.connect("on_moved", self, "_on_line_node_moved")
-		_on_line_node_moved(Vector2(0,0))
+		_on_line_node_moved(null, Vector2(0,0))
 	if to_line_node:
 		print("line_segment._ready to_line_node ", to_line_node.get_path())
 		to_line_node.connect("on_moved", self, "_on_line_node_moved")	
-		_on_line_node_moved(Vector2(0,0))
+		_on_line_node_moved(null, Vector2(0,0))
 		
 	$labels/segment_label.text = self.get_name()
 
@@ -54,7 +54,7 @@ func _input(event):
 					)
 
 
-func _on_line_node_moved(vec):
+func _on_line_node_moved(node, vec):
 	if from_line_node and to_line_node:
 		var from_node = from_line_node
 		var to_node = to_line_node

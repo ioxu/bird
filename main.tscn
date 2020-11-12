@@ -75,6 +75,7 @@ scene_body_path = NodePath("../../Node2D/scene_body")
 
 [node name="mouse_area" type="Area2D" parent="ui"]
 position = Vector2( 92.4653, 214.831 )
+z_index = 1000
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ui/mouse_area"]
 shape = SubResource( 1 )

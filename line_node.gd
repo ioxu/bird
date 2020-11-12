@@ -53,7 +53,7 @@ func destroy():
 
 func translate(vec):
 	.translate(vec)
-	emit_signal("on_moved", self.position)
+	emit_signal("on_moved", self, self.position)
 	update_label_positions()
 
 
