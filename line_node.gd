@@ -24,7 +24,10 @@ func connect_segment(segment):
 func remove_segment(segment):
 	print("remove segement ", segment.get_path(), " from ", self.get_path())
 	print("-> connected_segments ", connected_segments)
-	connected_segments.remove(connected_segments.find(segment))
+	var i_segment = connected_segments.find(segment)
+	#print("i_segment ", i_segment)
+	if i_segment != -1:
+		connected_segments.remove(i_segment)
 	self.translate(Vector2(0,0))
 
 func set_as_anchor(is_anchor):
@@ -55,6 +58,14 @@ func translate(vec):
 	.translate(vec)
 	emit_signal("on_moved", self, self.position)
 	update_label_positions()
+
+
+func update_label(label: String , value ):
+	match label:
+		"order":
+			$labels/graph_labels/PanelContainer/VBoxContainer/order_label.text = "O " + str(value)
+		"depth":
+			$labels/graph_labels/PanelContainer/VBoxContainer/depth_label.text = "D " + str(value)
 
 
 func update_label_positions():

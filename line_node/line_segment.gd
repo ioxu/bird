@@ -6,6 +6,7 @@ export(NodePath) var to_line_node_path
 export var grabbable = false
 export var deletable = true
 
+var connected_nodes = []
 var builder_node_type = "line_segment"
 
 onready var col_shape = $CollisionShape2D
@@ -22,11 +23,13 @@ func _ready():
 		print("line_segment._ready from_line_node ", from_line_node.get_path())
 		from_line_node.connect("on_moved", self, "_on_line_node_moved")
 		_on_line_node_moved(null, Vector2(0,0))
+		connected_nodes.append( from_line_node )
 	if to_line_node:
 		print("line_segment._ready to_line_node ", to_line_node.get_path())
 		to_line_node.connect("on_moved", self, "_on_line_node_moved")	
 		_on_line_node_moved(null, Vector2(0,0))
-		
+		connected_nodes.append( to_line_node )
+	print("  ", self," connected_nodes ", self.connected_nodes)
 	$labels/segment_label.text = self.get_name()
 
 
