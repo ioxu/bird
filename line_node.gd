@@ -63,9 +63,9 @@ func translate(vec):
 func update_label(label: String , value ):
 	match label:
 		"order":
-			$labels/graph_labels/PanelContainer/VBoxContainer/order_label.text = "O " + str(value)
+			$labels/graph_labels/PanelContainer/VBoxContainer/order_label.text = "o " + str(value)
 		"depth":
-			$labels/graph_labels/PanelContainer/VBoxContainer/depth_label.text = "D " + str(value)
+			$labels/graph_labels/PanelContainer/VBoxContainer/depth_label.text = "d " + str(value)
 
 
 func update_label_positions():
@@ -74,7 +74,7 @@ func update_label_positions():
 		#$labels/order_label.rect_position = Vector2(-20,-20)
 		$labels/graph_labels.position = Vector2(-20,-20)
 	elif len(connected_segments) > 0:
-		var av_vec : Vector2
+		var av_vec : Vector2 = Vector2(0,0)
 		var n_vectors := 0
 		for i in range(len(connected_segments)):
 			if connected_segments[i] != null:
@@ -114,6 +114,9 @@ func set_deactivated():
 	$Sprite_activated.visible = false
 
 
+# warning-ignore:unused_argument
+# warning-ignore:unused_argument
+# warning-ignore:unused_argument
 func _on_line_node_area_shape_entered(area_id, area, area_shape, self_shape):
 	if area.name == "mouse_area":
 		$Sprite_hover.visible = true
@@ -121,6 +124,9 @@ func _on_line_node_area_shape_entered(area_id, area, area_shape, self_shape):
 		$labels/node_label.visible = true
 
 
+# warning-ignore:unused_argument
+# warning-ignore:unused_argument
+# warning-ignore:unused_argument
 func _on_line_node_area_shape_exited(area_id, area, area_shape, self_shape):
 	if area.name == "mouse_area":
 		$Sprite_hover.visible = false

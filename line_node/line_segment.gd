@@ -57,6 +57,8 @@ func _input(event):
 					)
 
 
+# warning-ignore:unused_argument
+# warning-ignore:unused_argument
 func _on_line_node_moved(node, vec):
 	if from_line_node and to_line_node:
 		var from_node = from_line_node
@@ -68,6 +70,9 @@ func _on_line_node_moved(node, vec):
 		$labels.set_global_position( Vector2( int(position.x), int(position.y)) )
 
 
+# warning-ignore:unused_argument
+# warning-ignore:unused_argument
+# warning-ignore:unused_argument
 func _on_line_segment_area_shape_entered(area_id, area, area_shape, self_shape):
 	if area.name == "mouse_area":
 		if self.get_node("../../").show_insert_point_marker == true:
@@ -77,6 +82,9 @@ func _on_line_segment_area_shape_entered(area_id, area, area_shape, self_shape):
 		set_process_input(true)
 
 
+# warning-ignore:unused_argument
+# warning-ignore:unused_argument
+# warning-ignore:unused_argument
 func _on_line_segment_area_shape_exited(area_id, area, area_shape, self_shape):
 	if area.name == "mouse_area":
 		if self.get_node("../../").show_insert_point_marker == true:

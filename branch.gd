@@ -23,7 +23,7 @@ func _draw():
 		20,\
 		true)
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	
 	# apply wind
 	var npos : Vector2 = self.global_position

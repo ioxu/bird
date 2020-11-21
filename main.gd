@@ -9,13 +9,14 @@ func _ready():
 #	self.add_child(level_menu)
 	pass
 
-func _process(delta):
+func _process(_delta):
 	pass
 
 
 func _input(event):
 	if event.is_action_pressed("ui_reload"):
 		print("RESET")
+# warning-ignore:return_value_discarded
 		get_tree().reload_current_scene()
 
 	if event.is_action_pressed("ui_down"):

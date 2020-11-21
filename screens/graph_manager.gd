@@ -11,6 +11,8 @@ func _ready():
 	pass
 
 
+# warning-ignore:unused_argument
+# warning-ignore:unused_argument
 func _on_line_node_moved(node, vec):
 	#print("graph_manager _on_line_node_moved ", node, " ", vec)
 	pass

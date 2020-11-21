@@ -37,6 +37,7 @@ func _ready():
 	self.visible = false
 
 	# select tool context menu
+# warning-ignore:return_value_discarded
 	$tool_select_context_popup.connect("id_pressed", self, "_on_tool_select_context_popup_selected")
 
 
@@ -127,7 +128,7 @@ func _input(event):
 		# consume all input
 		#get_tree().set_input_as_handled()
 
-func _process(delta):
+func _process(_delta):
 	if active_tool == "select":
 		if mouse_status == "dragging":
 			mouse_drag_offset = mouse_clicked_pos - mouse_area.position
@@ -137,7 +138,7 @@ func _process(delta):
 	last_mouse_pos = mouse_area.position
 
 
-func mouse_middle_clicked(pos):
+func mouse_middle_clicked(_pos):
 	if active_tool == "add":
 		# from last_line_node_activated, find connected segments
 		# from area, find connected segments
@@ -160,7 +161,7 @@ func mouse_middle_clicked(pos):
 				print("line_node ",last_line_node_activated.get_name()," segments ", last_line_node_activated.connected_segments)
 
 
-func mouse_right_clicked(pos):
+func mouse_right_clicked(_pos):
 	if active_tool == "add":
 		var d_size = mouse_deletable_areas.size()
 		for a in mouse_deletable_areas:
@@ -180,7 +181,7 @@ func mouse_right_clicked(pos):
 				last_line_node_right_clicked = area
 
 
-func mouse_left_clicked(pos):
+func mouse_left_clicked(_pos):
 	if active_tool == "add" and mouse_canvas_click_enabled:
 		# check if mouse is overlapping a line_node
 		if mouse_overlapping_areas.size() > 0:
@@ -281,6 +282,8 @@ func _on_tool_select_context_popup_selected(id):
 	last_line_node_right_clicked = null
 
 
+# warning-ignore:unused_argument
+# warning-ignore:unused_argument
 func _on_mouse_area_area_shape_entered(area_id, area, area_shape, self_shape):
 	if self.visible:
 		var shape_owner = area.shape_owner_get_owner(area_shape).get_owner()
@@ -288,6 +291,8 @@ func _on_mouse_area_area_shape_entered(area_id, area, area_shape, self_shape):
 		mouse_overlapping_areas.append( shape_owner )
 	
 
+# warning-ignore:unused_argument
+# warning-ignore:unused_argument
 func _on_mouse_area_area_shape_exited(area_id, area, area_shape, self_shape):
 	if self.visible:
 		var shape_owner = area.shape_owner_get_owner(area_shape).get_owner()
