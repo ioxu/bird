@@ -87,7 +87,6 @@ shape = SubResource( 1 )
 texture = ExtResource( 10 )
 
 [node name="Node2D" type="Node2D" parent="."]
-visible = false
 
 [node name="scene_body" type="StaticBody2D" parent="Node2D"]
 
@@ -549,6 +548,7 @@ gradient = SubResource( 14 )
 joint_mode = 2
 begin_cap_mode = 2
 end_cap_mode = 2
+antialiased = true
 
 [node name="rb_ball4" type="RigidBody2D" parent="Node2D"]
 position = Vector2( 480.658, -12.8248 )

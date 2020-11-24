@@ -62,4 +62,6 @@ ui_edit_clear_points={
 
 [rendering]
 
+quality/filters/msaa=2
+quality/depth/hdr=false
 environment/default_environment="res://default_env.tres"

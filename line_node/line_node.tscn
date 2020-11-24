@@ -1,6 +1,6 @@
 [gd_scene load_steps=14 format=2]
 
-[ext_resource path="res://line_node.gd" type="Script" id=1]
+[ext_resource path="res://line_node/line_node.gd" type="Script" id=1]
 [ext_resource path="res://line_node/line_node.png" type="Texture" id=2]
 [ext_resource path="res://line_node/line_node_hover.png" type="Texture" id=3]
 [ext_resource path="res://line_node/line_node_activated.png" type="Texture" id=4]
@@ -9,27 +9,27 @@
 
 [sub_resource type="CircleShape2D" id=1]
 
-[sub_resource type="DynamicFont" id=7]
+[sub_resource type="DynamicFont" id=3]
 size = 8
+outline_size = 3
+outline_color = Color( 0.509804, 0.121569, 0.121569, 0.666667 )
 font_data = ExtResource( 6 )
 
 [sub_resource type="DynamicFont" id=2]
 size = 8
-outline_size = 3
-outline_color = Color( 0.509804, 0.121569, 0.121569, 0.666667 )
+font_data = ExtResource( 6 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 8
 font_data = ExtResource( 6 )
 
 [sub_resource type="DynamicFont" id=5]
 size = 8
 font_data = ExtResource( 6 )
 
-[sub_resource type="DynamicFont" id=6]
-size = 8
-font_data = ExtResource( 6 )
+[sub_resource type="StyleBoxEmpty" id=6]
 
-[sub_resource type="StyleBoxEmpty" id=3]
-
-[sub_resource type="DynamicFont" id=4]
+[sub_resource type="DynamicFont" id=7]
 size = 8
 font_data = ExtResource( 6 )
 
@@ -42,6 +42,7 @@ modulate = Color( 0.898039, 0.835294, 0.313726, 1 )
 shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
+modulate = Color( 1, 1, 1, 0.556863 )
 texture = ExtResource( 2 )
 
 [node name="Sprite_activated" type="Sprite" parent="."]
@@ -63,23 +64,23 @@ z_index = 1000
 
 [node name="transient_labels" type="Node2D" parent="labels"]
 
-[node name="node_instance_name_label" type="Label" parent="labels/transient_labels"]
-margin_left = 7.0
-margin_right = 91.0
-margin_bottom = 16.0
-custom_fonts/font = SubResource( 7 )
-text = "@"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="node_label" type="Label" parent="labels/transient_labels"]
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 49.0
 margin_bottom = 15.0
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = SubResource( 3 )
 text = "node label"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="node_instance_name_label" type="Label" parent="labels/transient_labels"]
+margin_left = 7.0
+margin_right = 91.0
+margin_bottom = 16.0
+custom_fonts/font = SubResource( 2 )
+text = "@"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -89,7 +90,7 @@ margin_left = 7.0
 margin_top = 14.0
 margin_right = 49.0
 margin_bottom = 22.0
-custom_fonts/font = SubResource( 5 )
+custom_fonts/font = SubResource( 4 )
 text = "distance:"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -100,7 +101,7 @@ margin_left = 7.0
 margin_top = 21.0
 margin_right = 38.0
 margin_bottom = 29.0
-custom_fonts/font = SubResource( 6 )
+custom_fonts/font = SubResource( 5 )
 text = "order: 1"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -111,7 +112,7 @@ __meta__ = {
 [node name="PanelContainer" type="PanelContainer" parent="labels/graph_labels"]
 margin_right = 31.0
 margin_bottom = 14.0
-custom_styles/panel = SubResource( 3 )
+custom_styles/panel = SubResource( 6 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -124,7 +125,7 @@ custom_constants/separation = -2
 [node name="depth_label" type="Label" parent="labels/graph_labels/PanelContainer/VBoxContainer"]
 margin_right = 31.0
 margin_bottom = 8.0
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 7 )
 custom_colors/font_color = Color( 0.972549, 0.972549, 0.972549, 0.392157 )
 text = "depth: 1"
 __meta__ = {
