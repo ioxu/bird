@@ -264,7 +264,6 @@ func mouse_left_clicked(_pos):
 
 			print("line_node ",line_node.get_name()," segments ", line_node.connected_segments)
 			last_line_node_activated = line_node
-			
 			$graph_manager._on_topology_changed()
 
 func _on_tool_select_context_popup_selected(id):

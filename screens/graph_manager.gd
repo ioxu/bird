@@ -14,8 +14,7 @@ func _ready():
 # warning-ignore:unused_argument
 # warning-ignore:unused_argument
 func _on_line_node_moved(node, vec):
-	#print("graph_manager _on_line_node_moved ", node, " ", vec)
-	pass
+	structure = graph_utils.parse_drawing( anchors )
 
 
 func _on_topology_changed():
@@ -31,8 +30,8 @@ func add_anchor(node):
 
 
 func remove_anchor(node):
-	print("graph_manager remove_anchor ", node)
 	anchors.remove(anchors.find(node))
+	print("graph_manager remove_anchor ", node, " ", anchors)
 	self._on_topology_changed()
 
 

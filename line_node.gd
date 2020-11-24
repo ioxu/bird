@@ -1,5 +1,7 @@
 extends Area2D
 
+var builder_node_type = "line_node"
+
 export var grabbable = true
 export var deletable = true
 export var anchor = false
@@ -7,12 +9,17 @@ signal on_moved
 
 var connected_segments = []
 
-var builder_node_type = "line_node"
 var activated = false
 
+# graph attributes
+var distance_from_anchor := 0.0 setget _set_distance_from_anchor, _get_distance_from_anchor
+var order := 0 setget _set_order, _get_order
+var depth := 0 setget _set_depth, _get_depth
 
 func _ready():
-	$labels/node_label.text = self.get_name()
+	$labels/transient_labels/node_label.text = self.get_name()
+	$labels/transient_labels/node_instance_name_label.text = str(self)
+	self.distance_from_anchor = 0.0
 
 
 func connect_segment(segment):
@@ -20,6 +27,7 @@ func connect_segment(segment):
 	print("-> connected_segments ", connected_segments)
 	connected_segments.append(segment)
 	self.translate(Vector2(0,0))
+
 
 func remove_segment(segment):
 	print("remove segement ", segment.get_path(), " from ", self.get_path())
@@ -30,6 +38,7 @@ func remove_segment(segment):
 		connected_segments.remove(i_segment)
 	self.translate(Vector2(0,0))
 
+
 func set_as_anchor(is_anchor):
 	if is_anchor:
 		anchor = true
@@ -37,6 +46,7 @@ func set_as_anchor(is_anchor):
 	else:
 		anchor = false
 		$Sprite_anchor.hide()
+
 
 func destroy():
 	set_process_input(false)
@@ -60,18 +70,30 @@ func translate(vec):
 	update_label_positions()
 
 
-func update_label(label: String , value ):
-	match label:
-		"order":
-			$labels/graph_labels/PanelContainer/VBoxContainer/order_label.text = "o " + str(value)
-		"depth":
-			$labels/graph_labels/PanelContainer/VBoxContainer/depth_label.text = "d " + str(value)
+func _set_order(new_value):
+	order = new_value
+	$labels/transient_labels/order_label.text = "order %d" % order
+	#$labels/graph_labels/PanelContainer.rect_size = Vector2(0,0)
+	#update_label_positions()
+
+
+func _get_order():
+	return order
+
+
+func _set_depth(new_value):
+	depth = new_value
+	$labels/graph_labels/PanelContainer/VBoxContainer/depth_label.text = "d %d" % depth
+	$labels/graph_labels/PanelContainer.rect_size = Vector2(0,0)
+	update_label_positions()
+
+
+func _get_depth():
+	return depth
 
 
 func update_label_positions():
-	# update labels
 	if len(connected_segments) == 0:
-		#$labels/order_label.rect_position = Vector2(-20,-20)
 		$labels/graph_labels.position = Vector2(-20,-20)
 	elif len(connected_segments) > 0:
 		var av_vec : Vector2 = Vector2(0,0)
@@ -83,9 +105,9 @@ func update_label_positions():
 					get_next_node_by_segment(connected_segments[i]).position).normalized()
 				n_vectors += 1
 		av_vec = (av_vec / n_vectors).normalized()
-		#$labels/order_label.rect_position =\
+		$labels/graph_labels/PanelContainer.rect_size = Vector2(0,0)
 		$labels/graph_labels.position =\
-			av_vec * Vector2( 25, 25) -\
+			av_vec * Vector2( 20, 20) -\
 			 ($labels/graph_labels/PanelContainer.rect_size / 2.0)
 
 
@@ -121,7 +143,7 @@ func _on_line_node_area_shape_entered(area_id, area, area_shape, self_shape):
 	if area.name == "mouse_area":
 		$Sprite_hover.visible = true
 		$Sprite.visible = false
-		$labels/node_label.visible = true
+		$labels/transient_labels.visible = true
 
 
 # warning-ignore:unused_argument
@@ -131,4 +153,13 @@ func _on_line_node_area_shape_exited(area_id, area, area_shape, self_shape):
 	if area.name == "mouse_area":
 		$Sprite_hover.visible = false
 		$Sprite.visible = true
-		$labels/node_label.visible = false
+		$labels/transient_labels.visible = false
+
+
+func _set_distance_from_anchor(new_value):
+	distance_from_anchor = new_value
+	$labels/transient_labels/distance_from_anchor_label.text = "distance %0.2f" % distance_from_anchor
+
+
+func _get_distance_from_anchor():
+	return distance_from_anchor

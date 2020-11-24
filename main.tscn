@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://addons/PinSpringJoint2D/PinSpringJoint2D.gd" type="Script" id=1]
 [ext_resource path="res://main.gd" type="Script" id=2]
@@ -46,6 +46,9 @@ _data = {
 
 [sub_resource type="Curve" id=12]
 _data = [ Vector2( 0, 1 ), 0.0, -0.148264, 0, 0, Vector2( 1, 0.354545 ), -2.11414, 0.0, 0, 0 ]
+
+[sub_resource type="Gradient" id=14]
+colors = PoolColorArray( 1, 0.920753, 0.136719, 1, 0.605469, 0.132446, 0.132446, 1 )
 
 [sub_resource type="CircleShape2D" id=13]
 radius = 23.2441
@@ -540,8 +543,9 @@ curve = SubResource( 11 )
 
 [node name="Line2D" type="Line2D" parent="Node2D/Path2D"]
 position = Vector2( 754.713, 488.66 )
-points = PoolVector2Array( 106.613, 61.684, 99.2106, -17.8928, 139.924, -36.3989, 171.385, -58.6064, 178.787, -136.332, 180.383, -241.566, 175.633, -300.466 )
+points = PoolVector2Array( 106.613, 61.684, 99.2106, -17.8928, 116.48, -25.7428, 139.924, -36.3989, 171.385, -58.6064, 178.787, -136.332, 180.383, -241.566, 175.633, -300.466 )
 width_curve = SubResource( 12 )
+gradient = SubResource( 14 )
 joint_mode = 2
 begin_cap_mode = 2
 end_cap_mode = 2

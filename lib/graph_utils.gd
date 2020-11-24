@@ -6,13 +6,12 @@ func convert_drawing_to_scene( drawing_nodes_path, scene_body_path):
 
 
 func parse_drawing(anchors: Array = []):
-	print("graph_utils.parse_graph, anchors: ", anchors.size(), " ", anchors)
+	#print("graph_utils.parse_graph, anchors: ", anchors.size(), " ", anchors)
 	for a in anchors:
-		print("  anchor ", a.get_path())
-		a.update_label("order", 0 )
-		a.update_label("depth", 0 )
+		#print("  anchor ", a.get_path())
+		a.order = 0
+		a.depth = 0
 		var _result  = DFS(a)
-		#print("  result: ", result)
 	return {}
 
 
@@ -20,13 +19,20 @@ func DFS(a):
 	var visited := []
 	var visited_nodes := []
 	var visited_segments := []
-	DFS_do(a, null, 0 , visited, visited_nodes, visited_segments)
+	DFS_do(a, null, 0 , 0.0, visited, visited_nodes, visited_segments)
 	return {"visited": visited,
 		"visited_nodes": visited_nodes,
 		"visited_segments": visited_segments}
 
 
-func DFS_do(node, previous_segment, previous_depth , visited, visited_nodes, visited_segments):
+func DFS_do(node,
+	previous_segment,
+	previous_depth,
+	previous_distance,
+	visited,
+	visited_nodes,
+	visited_segments):
+
 	for s in node.connected_segments:
 		if s != previous_segment:
 			visited.append( s )
@@ -35,8 +41,11 @@ func DFS_do(node, previous_segment, previous_depth , visited, visited_nodes, vis
 				if n != node:
 					visited.append( n )
 					visited_nodes.append(n)
-					n.update_label("order", visited_nodes.size() )
 					var depth = previous_depth + 1
-					n.update_label("depth", depth )
-					DFS_do(n, s, depth, visited, visited_nodes, visited_segments)
+					var distance = previous_distance + s.length
+					n.order = visited_nodes.size()
+					n.depth = depth
+					n.distance_from_anchor = distance
+					s.direction = [ node, n ]
+					DFS_do(n, s, depth, distance, visited, visited_nodes, visited_segments)
 
