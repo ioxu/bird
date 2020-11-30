@@ -15,6 +15,8 @@ func _ready():
 # warning-ignore:unused_argument
 func _on_line_node_moved(node, vec):
 	structure = graph_utils.parse_drawing( anchors )
+	
+	# update line_segment line drawing
 
 
 func _on_topology_changed():

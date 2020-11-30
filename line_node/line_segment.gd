@@ -77,6 +77,11 @@ func _on_line_node_moved(node, vec):
 		$labels.set_global_rotation(0)
 		$labels.set_global_position( Vector2( int(position.x), int(position.y)) )
 		self.length = from_to.length()
+		
+		$line2d.points[0] = Vector2(0.0, -length/2.0)
+		$line2d.points[1] = Vector2(0.0, length/2.0)
+
+
 
 
 func _set_direction(new_value):

@@ -5,6 +5,7 @@ var builder_node_type = "line_node"
 export var grabbable = true
 export var deletable = true
 export var anchor = false
+export var leaf = false setget _set_leaf, _get_leaf
 signal on_moved
 
 var connected_segments = []
@@ -163,3 +164,11 @@ func _set_distance_from_anchor(new_value):
 
 func _get_distance_from_anchor():
 	return distance_from_anchor
+
+
+func _set_leaf(new_value):
+	leaf = new_value
+	$Sprite_leaf.visible = new_value
+	
+func _get_leaf():
+	return leaf

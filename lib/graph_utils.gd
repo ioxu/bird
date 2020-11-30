@@ -19,7 +19,8 @@ func DFS(a):
 	var visited := []
 	var visited_nodes := []
 	var visited_segments := []
-	DFS_do(a, null, 0 , 0.0, visited, visited_nodes, visited_segments)
+	var leaves := []
+	DFS_do(a, null, 0 , 0.0, visited, visited_nodes, visited_segments, leaves)
 	return {"visited": visited,
 		"visited_nodes": visited_nodes,
 		"visited_segments": visited_segments}
@@ -31,10 +32,17 @@ func DFS_do(node,
 	previous_distance,
 	visited,
 	visited_nodes,
-	visited_segments):
+	visited_segments,
+	leaves):
+
+	node.leaf = false
+
+	if node.connected_segments.size() == 1 and not node.anchor:
+		leaves.append(node)
+		node.leaf = true
 
 	for s in node.connected_segments:
-		if s != previous_segment:
+		if s != previous_segment and is_instance_valid(s):
 			visited.append( s )
 			visited_segments.append( s )
 			for n in s.connected_nodes:
@@ -47,5 +55,5 @@ func DFS_do(node,
 					n.depth = depth
 					n.distance_from_anchor = distance
 					s.direction = [ node, n ]
-					DFS_do(n, s, depth, distance, visited, visited_nodes, visited_segments)
+					DFS_do(n, s, depth, distance, visited, visited_nodes, visited_segments, leaves)
 

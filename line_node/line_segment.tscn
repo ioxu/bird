@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://line_node/line_segment.gd" type="Script" id=1]
 [ext_resource path="res://fonts/04B_03B_.TTF" type="DynamicFontData" id=2]
@@ -8,6 +8,9 @@
 blend_mode = 1
 
 [sub_resource type="RectangleShape2D" id=2]
+
+[sub_resource type="Curve" id=4]
+_data = [ Vector2( 0, 1 ), 0.0, -1.0, 0, 1, Vector2( 1, 0 ), -1.0, 0.0, 1, 0 ]
 
 [sub_resource type="DynamicFont" id=3]
 size = 8
@@ -28,8 +31,16 @@ default_color = Color( 0.992157, 0.992157, 0.992157, 0.466667 )
 begin_cap_mode = 2
 end_cap_mode = 2
 
+[node name="line2d" type="Line2D" parent="."]
+points = PoolVector2Array( -0.125, 10, 0, -10.0625 )
+width_curve = SubResource( 4 )
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+antialiased = true
+
 [node name="direction_sprite" type="Sprite" parent="."]
-modulate = Color( 1, 1, 1, 0.223529 )
+modulate = Color( 1, 1, 1, 0.392157 )
 scale = Vector2( 0.4, 0.4 )
 texture = ExtResource( 3 )
 

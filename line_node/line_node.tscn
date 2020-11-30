@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://line_node/line_node.gd" type="Script" id=1]
 [ext_resource path="res://line_node/line_node.png" type="Texture" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://line_node/line_node_activated.png" type="Texture" id=4]
 [ext_resource path="res://screens/edit_mode_anchor.png" type="Texture" id=5]
 [ext_resource path="res://fonts/04B_03B_.TTF" type="DynamicFontData" id=6]
+[ext_resource path="res://screens/edit_mode_leaf.png" type="Texture" id=7]
 
 [sub_resource type="CircleShape2D" id=1]
 
@@ -35,6 +36,7 @@ font_data = ExtResource( 6 )
 
 [node name="line_node" type="Area2D"]
 position = Vector2( 205.485, 473.003 )
+z_index = 20
 script = ExtResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -58,6 +60,12 @@ visible = false
 modulate = Color( 1, 1, 1, 0.615686 )
 z_index = 100
 texture = ExtResource( 5 )
+
+[node name="Sprite_leaf" type="Sprite" parent="."]
+visible = false
+modulate = Color( 1, 1, 1, 0.301961 )
+z_index = 100
+texture = ExtResource( 7 )
 
 [node name="labels" type="Node2D" parent="."]
 z_index = 1000
