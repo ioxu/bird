@@ -82,7 +82,7 @@ from_line_node_path = NodePath("../line_node")
 margin_left = 7.0
 margin_top = 219.0
 margin_right = 43.0
-margin_bottom = 346.0
+margin_bottom = 401.0
 rect_min_size = Vector2( 0, 1 )
 custom_styles/panel = SubResource( 2 )
 script = ExtResource( 5 )
@@ -92,7 +92,7 @@ __meta__ = {
 
 [node name="MarginContainer" type="MarginContainer" parent="tool_panel"]
 margin_right = 36.0
-margin_bottom = 127.0
+margin_bottom = 182.0
 mouse_filter = 2
 custom_constants/margin_right = 2
 custom_constants/margin_top = 2
@@ -103,7 +103,7 @@ custom_constants/margin_bottom = 2
 margin_left = 2.0
 margin_top = 2.0
 margin_right = 34.0
-margin_bottom = 125.0
+margin_bottom = 180.0
 mouse_filter = 2
 custom_constants/separation = 4
 
@@ -175,7 +175,6 @@ position = Vector2( 16, 16 )
 texture = ExtResource( 10 )
 
 [node name="HSeparator2" type="HSeparator" parent="tool_panel/MarginContainer/VBoxContainer"]
-visible = false
 margin_top = 127.0
 margin_right = 32.0
 margin_bottom = 142.0
@@ -186,7 +185,6 @@ __meta__ = {
 }
 
 [node name="tool_commit" type="TextureButton" parent="tool_panel/MarginContainer/VBoxContainer"]
-visible = false
 self_modulate = Color( 1, 1, 1, 0.470588 )
 margin_top = 146.0
 margin_right = 32.0

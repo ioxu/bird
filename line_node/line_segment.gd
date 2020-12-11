@@ -19,6 +19,8 @@ var to_line_node = null
 var length := 0.0 setget _set_length, _get_length
 var direction : Array = [null, null] setget _set_direction, _get_direction# describes the graph walk direction away from anchor
 
+# drawing attributes
+var line_widths : Array = [null, null] setget _set_line_widths, _get_line_widths
 
 func _ready():
 	from_line_node = get_node(from_line_node_path)
@@ -36,9 +38,13 @@ func _ready():
 		connected_nodes.append( to_line_node )
 	print("  ", self," connected_nodes ", self.connected_nodes)
 	$labels/transient_labels.visible = false
+	$labels/transient_labels/segment_instance_name_label.text = str(self)
 	$labels/transient_labels/segment_label.text = self.get_name()
 	$direction_sprite.visible = false
 
+	$line2d.width_curve = Curve.new()
+	$line2d.width_curve.add_point( Vector2(0.0, 1.0), 0.0, 0.0, Curve.TANGENT_LINEAR, Curve.TANGENT_LINEAR )
+	$line2d.width_curve.add_point( Vector2(1.0, 1.0), 0.0, 0.0, Curve.TANGENT_LINEAR, Curve.TANGENT_LINEAR )
 
 func destroy():
 	set_process_input(false)
@@ -82,6 +88,31 @@ func _on_line_node_moved(node, vec):
 		$line2d.points[1] = Vector2(0.0, length/2.0)
 
 
+func _set_line_widths(widths:Array):
+	if widths[0] == null or widths[1] == null:
+		return
+	var curve = $line2d.width_curve
+#	why doesn't this work???
+#	if direction[0] == connected_nodes[0]:
+#		curve.set_point_value(0, widths[0])
+#		curve.set_point_value(1, widths[1])
+#	else:
+#		curve.set_point_value(0, widths[1])
+#		curve.set_point_value(1, widths[0])
+	curve.set_point_value(0, widths[0])
+	curve.set_point_value(1, widths[1])
+	if direction[0] == connected_nodes[0]:
+		$line2d.scale.y = -1
+	else:
+		$line2d.scale.y = 1
+
+
+func _get_line_widths():
+	return line_widths
+
+
+func reset_line_widths():
+	line_widths = [null, null]
 
 
 func _set_direction(new_value):
@@ -91,6 +122,7 @@ func _set_direction(new_value):
 		$direction_sprite.flip_v = true
 	else:
 		$direction_sprite.flip_v = false
+	
 
 
 func _get_direction():
@@ -128,3 +160,4 @@ func _on_line_segment_area_shape_exited(area_id, area, area_shape, self_shape):
 
 		$labels/transient_labels.visible = false
 		set_process_input(false)
+

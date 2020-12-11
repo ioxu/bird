@@ -9,10 +9,10 @@ blend_mode = 1
 
 [sub_resource type="RectangleShape2D" id=2]
 
-[sub_resource type="Curve" id=4]
+[sub_resource type="Curve" id=3]
 _data = [ Vector2( 0, 1 ), 0.0, -1.0, 0, 1, Vector2( 1, 0 ), -1.0, 0.0, 1, 0 ]
 
-[sub_resource type="DynamicFont" id=3]
+[sub_resource type="DynamicFont" id=4]
 size = 8
 font_data = ExtResource( 2 )
 
@@ -33,7 +33,9 @@ end_cap_mode = 2
 
 [node name="line2d" type="Line2D" parent="."]
 points = PoolVector2Array( -0.125, 10, 0, -10.0625 )
-width_curve = SubResource( 4 )
+width = 1.0
+width_curve = SubResource( 3 )
+default_color = Color( 0.4, 0.501961, 1, 0.65098 )
 joint_mode = 2
 begin_cap_mode = 2
 end_cap_mode = 2
@@ -49,10 +51,21 @@ z_index = 1000
 
 [node name="transient_labels" type="Node2D" parent="labels"]
 
-[node name="segment_label" type="Label" parent="labels/transient_labels"]
+[node name="segment_instance_name_label" type="Label" parent="labels/transient_labels"]
 margin_right = 56.0
 margin_bottom = 8.0
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 4 )
+custom_colors/font_color = Color( 0.67451, 0.67451, 0.67451, 0.658824 )
+text = "@"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="segment_label" type="Label" parent="labels/transient_labels"]
+margin_top = 7.0
+margin_right = 56.0
+margin_bottom = 15.0
+custom_fonts/font = SubResource( 4 )
 custom_colors/font_color = Color( 0.67451, 0.67451, 0.67451, 0.658824 )
 text = "segment ID: 8"
 __meta__ = {
@@ -60,10 +73,10 @@ __meta__ = {
 }
 
 [node name="length_label" type="Label" parent="labels/transient_labels"]
-margin_top = 7.0
+margin_top = 14.0
 margin_right = 56.0
-margin_bottom = 15.0
-custom_fonts/font = SubResource( 3 )
+margin_bottom = 22.0
+custom_fonts/font = SubResource( 4 )
 custom_colors/font_color = Color( 0.67451, 0.67451, 0.67451, 0.658824 )
 text = "length: 0.0"
 __meta__ = {

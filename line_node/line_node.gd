@@ -9,6 +9,7 @@ export var leaf = false setget _set_leaf, _get_leaf
 signal on_moved
 
 var connected_segments = []
+var incoming_segment = null
 
 var activated = false
 
