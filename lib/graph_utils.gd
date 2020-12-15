@@ -51,6 +51,9 @@ func DFS_do(node,
 		node.leaf = true
 		node.incoming_segment = previous_segment
 
+	if node.anchor:
+		node.distance_from_anchor = 0.0
+
 	for s in node.connected_segments:
 		if s != previous_segment and is_instance_valid(s):
 			visited.append( s )
@@ -102,7 +105,8 @@ func set_line_widths(structure):
 			var this_segment = null
 			var limit = 0
 			var this_leaf_distance = this_node.distance_from_anchor
-			var branch_colour = get_random_colours()[random_colours.size() - l -1]
+			#var branch_colour = get_random_colours()[random_colours.size() - l -1]
+			var branch_colour = Color(0.160355, 0.237206, 0.441406)
 
 			while stop != true:
 				this_segment = this_node.incoming_segment
