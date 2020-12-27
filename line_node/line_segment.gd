@@ -62,11 +62,24 @@ func destroy():
 func _input(event):
 		if event is InputEventMouseMotion:
 			if is_instance_valid(from_line_node) and is_instance_valid(to_line_node):
-				$insert_point_marker.set_global_position(\
-					Geometry.get_closest_point_to_segment_2d(\
-						get_global_mouse_position(),\
+#				$insert_point_marker.set_global_position(\
+#					Geometry.get_closest_point_to_segment_2d(\
+#						get_global_mouse_position(),\
+#						from_line_node.position,\
+#						to_line_node.position)\
+#					)
+				#$insert_point_marker.set_global_position(\
+				
+				var lpos = Geometry.get_closest_point_to_segment_2d(\
+						self.get_parent().get_parent().get_local_mouse_position(),\
 						from_line_node.position,\
 						to_line_node.position)\
+				
+				lpos = lpos - from_line_node.position
+
+				$insert_point_marker.set_position(\
+					Vector2( 0.0, lpos.length() -\
+					(from_line_node.position - to_line_node.position).length()/2.0)\
 					)
 
 
@@ -81,7 +94,6 @@ func _on_line_node_moved(node, vec):
 		self.rotation = (from_to).normalized().angle() + PI/2
 		col_shape.set_scale( Vector2( 0.5, ((to_node.position - from_node.position).length() -23.0 ) / 20.0 )  )
 		$labels.set_global_rotation(0)
-		$labels.set_global_position( Vector2( int(position.x), int(position.y)) )
 		self.length = from_to.length()
 		
 		$line2d.points[0] = Vector2(0.0, -length/2.0)
@@ -143,7 +155,7 @@ func _get_length():
 # warning-ignore:unused_argument
 func _on_line_segment_area_shape_entered(area_id, area, area_shape, self_shape):
 	if area.name == "mouse_area":
-		if self.get_node("../../").show_insert_point_marker == true:
+		if self.get_node("../../../").show_insert_point_marker == true:
 			$insert_point_marker.visible = true
 
 		$labels/transient_labels.visible = true
@@ -155,7 +167,7 @@ func _on_line_segment_area_shape_entered(area_id, area, area_shape, self_shape):
 # warning-ignore:unused_argument
 func _on_line_segment_area_shape_exited(area_id, area, area_shape, self_shape):
 	if area.name == "mouse_area":
-		if self.get_node("../../").show_insert_point_marker == true:
+		if self.get_node("../../../").show_insert_point_marker == true:
 			$insert_point_marker.visible = false
 
 		$labels/transient_labels.visible = false

@@ -36,3 +36,7 @@ func remove_anchor(node):
 	self._on_topology_changed()
 
 
+func clear_graph(worksheet):
+	for i in worksheet.get_tree_nodes():
+		i.queue_free()
+	anchors.clear()

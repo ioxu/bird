@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://screens/level_menu.gd" type="Script" id=1]
 [ext_resource path="res://screens/edit_mode_edit_selected.png" type="Texture" id=2]
@@ -14,6 +14,8 @@
 [ext_resource path="res://screens/tool_select_context_popup.gd" type="Script" id=12]
 [ext_resource path="res://screens/edit_mode_tool_commit.png" type="Texture" id=13]
 [ext_resource path="res://screens/graph_manager.gd" type="Script" id=14]
+[ext_resource path="res://screens/manu_panel_zoom_value.gd" type="Script" id=15]
+[ext_resource path="res://screens/worksheet.gd" type="Script" id=16]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0, 0, 0, 0.623529 )
@@ -32,6 +34,34 @@ grow_begin = -5.0
 grow_end = -5.0
 thickness = 5
 
+[sub_resource type="StyleBoxFlat" id=5]
+bg_color = Color( 1, 1, 1, 0.133333 )
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+corner_detail = 3
+
+[sub_resource type="StyleBoxFlat" id=6]
+bg_color = Color( 1, 1, 1, 0.113725 )
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0.403922, 0.403922, 0.403922, 0 )
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color( 0.129412, 0.843137, 0.831373, 0.188235 )
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+corner_detail = 3
+
 [node name="Node2D" type="Node2D"]
 script = ExtResource( 1 )
 
@@ -47,36 +77,6 @@ custom_styles/panel = SubResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="Label" type="Label" parent="."]
-margin_left = 9.936
-margin_top = 169.881
-margin_right = 81.936
-margin_bottom = 183.881
-text = "level menu"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="active_tool_label" type="Label" parent="."]
-margin_left = 12.449
-margin_top = 203.384
-margin_right = 79.449
-margin_bottom = 217.384
-custom_colors/font_color = Color( 1, 1, 0.996078, 0.368627 )
-text = "active tool"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="tree_nodes" type="Node2D" parent="."]
-
-[node name="line_node" parent="tree_nodes" instance=ExtResource( 9 )]
-position = Vector2( -96.6976, 18.8086 )
-
-[node name="line_segment" parent="tree_nodes" instance=ExtResource( 11 )]
-position = Vector2( -96.0458, 56.0002 )
-from_line_node_path = NodePath("../line_node")
 
 [node name="tool_panel" type="PanelContainer" parent="."]
 margin_left = 7.0
@@ -202,6 +202,116 @@ temporary = true
 position = Vector2( 16, 16 )
 texture = ExtResource( 13 )
 
+[node name="menu_panel" type="PanelContainer" parent="."]
+margin_right = 133.0
+margin_bottom = 24.0
+custom_styles/panel = SubResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="menu_panel"]
+margin_right = 141.0
+margin_bottom = 32.0
+mouse_filter = 2
+custom_constants/margin_right = 4
+custom_constants/margin_top = 4
+custom_constants/margin_left = 4
+custom_constants/margin_bottom = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="menu_panel/MarginContainer"]
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 137.0
+margin_bottom = 28.0
+mouse_filter = 2
+
+[node name="zoom_menu_panel" type="PanelContainer" parent="menu_panel/MarginContainer/HBoxContainer"]
+margin_right = 133.0
+margin_bottom = 24.0
+mouse_filter = 2
+custom_styles/panel = SubResource( 6 )
+
+[node name="MarginContainer" type="MarginContainer" parent="menu_panel/MarginContainer/HBoxContainer/zoom_menu_panel"]
+margin_right = 133.0
+margin_bottom = 24.0
+custom_constants/margin_right = 2
+custom_constants/margin_top = 2
+custom_constants/margin_left = 2
+custom_constants/margin_bottom = 2
+
+[node name="zoom_menu_HBoxContainer" type="HBoxContainer" parent="menu_panel/MarginContainer/HBoxContainer/zoom_menu_panel/MarginContainer"]
+margin_left = 2.0
+margin_top = 2.0
+margin_right = 131.0
+margin_bottom = 22.0
+mouse_filter = 2
+
+[node name="zoom_label" type="Label" parent="menu_panel/MarginContainer/HBoxContainer/zoom_menu_panel/MarginContainer/zoom_menu_HBoxContainer"]
+margin_top = 3.0
+margin_right = 36.0
+margin_bottom = 17.0
+text = "zoom"
+
+[node name="zoom_value" type="Label" parent="menu_panel/MarginContainer/HBoxContainer/zoom_menu_panel/MarginContainer/zoom_menu_HBoxContainer"]
+margin_left = 40.0
+margin_top = 3.0
+margin_right = 80.0
+margin_bottom = 17.0
+rect_min_size = Vector2( 40, 0 )
+text = "100%"
+align = 2
+script = ExtResource( 15 )
+
+[node name="zoom_reset_button" type="Button" parent="menu_panel/MarginContainer/HBoxContainer/zoom_menu_panel/MarginContainer/zoom_menu_HBoxContainer"]
+margin_left = 84.0
+margin_right = 129.0
+margin_bottom = 20.0
+text = "reset"
+
+[node name="Label" type="Label" parent="."]
+visible = false
+margin_left = 9.936
+margin_top = 169.881
+margin_right = 81.936
+margin_bottom = 183.881
+text = "level menu"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="active_tool_label" type="Label" parent="."]
+margin_left = 12.449
+margin_top = 203.384
+margin_right = 79.449
+margin_bottom = 217.384
+custom_colors/font_color = Color( 1, 1, 0.996078, 0.368627 )
+text = "active tool"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="worksheet" type="Node2D" parent="."]
+script = ExtResource( 16 )
+
+[node name="tree_nodes" type="Node2D" parent="worksheet"]
+
+[node name="line_node" parent="worksheet/tree_nodes" instance=ExtResource( 9 )]
+position = Vector2( -96.6976, 18.8086 )
+
+[node name="line_segment" parent="worksheet/tree_nodes" instance=ExtResource( 11 )]
+position = Vector2( -96.0458, 56.0002 )
+from_line_node_path = NodePath("../../worksheet/tree_nodes/line_node")
+
+[node name="sheet_outline" type="Panel" parent="worksheet"]
+margin_right = 1024.0
+margin_bottom = 600.0
+mouse_filter = 2
+custom_styles/panel = SubResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="tool_select_context_popup" type="PopupMenu" parent="."]
 margin_top = -64.0
 margin_right = 29.0
@@ -214,3 +324,9 @@ script = ExtResource( 12 )
 [connection signal="pressed" from="tool_panel/MarginContainer/VBoxContainer/tool_add" to="tool_panel/MarginContainer/VBoxContainer/tool_add" method="_on_toolbar_button_pressed"]
 [connection signal="pressed" from="tool_panel/MarginContainer/VBoxContainer/tool_clear" to="tool_panel/MarginContainer/VBoxContainer/tool_clear" method="_on_toolbar_button_pressed"]
 [connection signal="pressed" from="tool_panel/MarginContainer/VBoxContainer/tool_commit" to="tool_panel/MarginContainer/VBoxContainer/tool_commit" method="_on_toolbar_button_pressed"]
+[connection signal="mouse_entered" from="menu_panel" to="." method="_on_menu_panel_mouse_entered"]
+[connection signal="mouse_exited" from="menu_panel" to="." method="_on_menu_panel_mouse_exited"]
+[connection signal="button_down" from="menu_panel/MarginContainer/HBoxContainer/zoom_menu_panel/MarginContainer/zoom_menu_HBoxContainer/zoom_reset_button" to="worksheet" method="reset_transform"]
+[connection signal="mouse_entered" from="menu_panel/MarginContainer/HBoxContainer/zoom_menu_panel/MarginContainer/zoom_menu_HBoxContainer/zoom_reset_button" to="." method="_on_tool_panel_mouse_entered"]
+[connection signal="mouse_exited" from="menu_panel/MarginContainer/HBoxContainer/zoom_menu_panel/MarginContainer/zoom_menu_HBoxContainer/zoom_reset_button" to="." method="_on_tool_panel_mouse_exited"]
+[connection signal="changed_zoom" from="worksheet" to="menu_panel/MarginContainer/HBoxContainer/zoom_menu_panel/MarginContainer/zoom_menu_HBoxContainer/zoom_value" method="_on_worksheet_changed_zoom"]

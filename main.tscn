@@ -579,6 +579,7 @@ points = PoolVector2Array( -0.664673, 22.739, -0.664673, -0.328167 )
 width = 2.0
 
 [node name="Path2D" type="Path2D" parent="."]
+visible = false
 curve = SubResource( 12 )
 
 [node name="Line2D" type="Line2D" parent="Path2D"]

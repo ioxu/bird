@@ -44,7 +44,7 @@ modulate = Color( 0.898039, 0.835294, 0.313726, 1 )
 shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
-modulate = Color( 1, 1, 1, 0.556863 )
+modulate = Color( 0.266667, 0.356863, 0.494118, 1 )
 texture = ExtResource( 2 )
 
 [node name="Sprite_activated" type="Sprite" parent="."]
@@ -53,6 +53,7 @@ texture = ExtResource( 4 )
 
 [node name="Sprite_hover" type="Sprite" parent="."]
 visible = false
+modulate = Color( 1, 1, 1, 0.521569 )
 texture = ExtResource( 3 )
 
 [node name="Sprite_anchor" type="Sprite" parent="."]

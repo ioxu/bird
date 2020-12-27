@@ -37,8 +37,11 @@ func _ready():
 	self.visible = false
 
 	# select tool context menu
-# warning-ignore:return_value_discarded
+	# warning-ignore:return_value_discarded
 	$tool_select_context_popup.connect("id_pressed", self, "_on_tool_select_context_popup_selected")
+
+	for c in $worksheet/tree_nodes.get_children():
+		c.destroy()
 
 
 func _input(event):
@@ -132,8 +135,9 @@ func _process(_delta):
 	if active_tool == "select":
 		if mouse_status == "dragging":
 			mouse_drag_offset = mouse_clicked_pos - mouse_area.position
+			var zoom = Vector2.ONE/$worksheet.scale
 			for a in mouse_grabbed_areas:
-				a.translate(  - (last_mouse_pos - mouse_area.position) )
+				a.translate(  - (last_mouse_pos - mouse_area.position) * zoom )
 
 	last_mouse_pos = mouse_area.position
 
@@ -155,7 +159,7 @@ func mouse_middle_clicked(_pos):
 				var line_segment = line_segment_scene.instance()
 				line_segment.set("from_line_node_path", last_line_node_activated.get_path() )
 				line_segment.set("to_line_node_path", area.get_path() )				
-				$tree_nodes.add_child(line_segment)
+				$worksheet/tree_nodes.add_child(line_segment)
 				last_line_node_activated.connect_segment( line_segment )
 				area.connect_segment( line_segment )
 				print("line_node ",last_line_node_activated.get_name()," segments ", last_line_node_activated.connected_segments)
@@ -216,8 +220,8 @@ func mouse_left_clicked(_pos):
 					
 				#new line_node
 				var line_node = line_node_scene.instance()
-				line_node.set_global_position( segment_insert_pos )
-				$tree_nodes.add_child(line_node)
+				line_node.set_global_position( $worksheet.to_local(segment_insert_pos) )
+				$worksheet/tree_nodes.add_child(line_node)
 				line_node.connect("on_moved", $graph_manager, "_on_line_node_moved")
 				line_node.set_activated()
 				
@@ -227,44 +231,44 @@ func mouse_left_clicked(_pos):
 					# segment 0
 					line_segment.set("from_line_node_path", in_node.get_path() )
 					line_segment.set("to_line_node_path", line_node.get_path() )				
-					$tree_nodes.add_child(line_segment)
+					$worksheet/tree_nodes.add_child(line_segment)
 					in_node.connect_segment( line_segment )
 					line_node.connect_segment( line_segment )
 
 					# segment 1
 					line_segment = line_segment_scene.instance()
 					line_segment.set("from_line_node_path", line_node.get_path() )
-					line_segment.set("to_line_node_path", out_node.get_path() )				
-					$tree_nodes.add_child(line_segment)
+					line_segment.set("to_line_node_path", out_node.get_path() )
+					$worksheet/tree_nodes.add_child(line_segment)
 					line_node.connect_segment( line_segment )
 					out_node.connect_segment( line_segment )
 
 				last_line_node_activated = line_node
-				
+
 				$graph_manager._on_topology_changed()
-				
+
 		else:
 			# blank space, add new node and segment
 			var line_node = line_node_scene.instance()
-			line_node.set_global_position( mouse_area.position )
-			$tree_nodes.add_child(line_node)
-			#line_node.connect("on_moved", self, "_on_line_node_moved")
+			line_node.set_global_position( $worksheet.to_local(mouse_area.position) )
+			$worksheet/tree_nodes.add_child(line_node)
 			line_node.connect("on_moved", $graph_manager, "_on_line_node_moved")
 			line_node.set_activated()
-			
+
 			if is_instance_valid(last_line_node_activated):
 				last_line_node_activated.set_deactivated()
 				var line_segment = line_segment_scene.instance()
 				# connect
 				line_segment.set("from_line_node_path", last_line_node_activated.get_path() )
-				line_segment.set("to_line_node_path", line_node.get_path() )				
-				$tree_nodes.add_child(line_segment)
+				line_segment.set("to_line_node_path", line_node.get_path() )
+				$worksheet/tree_nodes.add_child(line_segment)
 				line_node.connect_segment( line_segment )
 				last_line_node_activated.connect_segment( line_segment )
 
 			print("line_node ",line_node.get_name()," segments ", line_node.connected_segments)
 			last_line_node_activated = line_node
 			$graph_manager._on_topology_changed()
+
 
 func _on_tool_select_context_popup_selected(id):
 	print("tool select context popup selected id ", id)
@@ -307,6 +311,16 @@ func _on_tool_panel_mouse_exited():
 	mouse_canvas_click_enabled = true
 
 
+func _on_menu_panel_mouse_entered():
+	print("_on_menu_panel_mouse_entered")
+	mouse_canvas_click_enabled = false
+
+
+func _on_menu_panel_mouse_exited():
+	print("_on_menu_panel_mouse_exited")
+	mouse_canvas_click_enabled = true
+
+
 func toggle_visibility():
 	if self.visible:
 		print("commit drawing to scene ..")
@@ -329,23 +343,22 @@ func _on_tool_panel_on_tool_changed(_tool):
 	if active_tool == "clear":
 		print("  CLEAR ALL POINTS")
 		last_line_node_activated = null
-		for i in $tree_nodes.get_children():
-			i.queue_free()
+		$graph_manager.clear_graph($worksheet)
 
 	if active_tool == "commit":
 		print("  commit drawing to scene ..")
 		last_line_node_activated = null
 		commit_drawing()
 
-#func _on_line_node_moved(node, vec):
-#	# update graph
-#	var graph = graph_utils.parse_drawing($tree_nodes)
-#
-#
-#
+
 func commit_drawing():
 	print("  do commit drawing ..")
-	# convert $tree_nodes's children to dynamic bode
+	# convert $tree_nodes's children to dynamic bodies
 	# under ../scene_body
+	graph_utils.convert_drawing_to_scene( $worksheet/tree_nodes.get_path(), scene_body_path)
 
-	graph_utils.convert_drawing_to_scene( $tree_nodes.get_path(), scene_body_path)
+
+
+
+
+

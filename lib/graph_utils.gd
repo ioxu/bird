@@ -83,6 +83,7 @@ class DistanceToAnchorSorter:
 			return true
 		return false
 
+
 func set_line_widths(structure):
 	# (structure as returned from parse_drawing)
 	reset_segments(structure)
@@ -95,9 +96,10 @@ func set_line_widths(structure):
 		if sorted_leaves.size() == 0:
 			break 
 			
-		var longest_distance = sorted_leaves[0].distance_from_anchor
+		#var longest_distance = sorted_leaves[0].distance_from_anchor
 		### TODO: base widths need to be configured elsewhere
 		var base_width = 40.0
+		var tip_width = 5.0
 		
 		for l in range(sorted_leaves.size()):
 			var stop = false
@@ -110,17 +112,16 @@ func set_line_widths(structure):
 
 			while stop != true:
 				this_segment = this_node.incoming_segment
-				# break and stop setting widths
 				if this_segment.line_widths[0] != null:
+					# break and stop setting widths
 					break
 				this_segment.get_node("line2d").default_color = branch_colour
-				# widths
+
 				var distance_this_node = this_node.distance_from_anchor
 				this_node = this_segment.direction[0]
 				var distance_next_node = this_node.distance_from_anchor
-				var w1 = base_width - (distance_this_node / this_leaf_distance) *base_width
-				var w2 = base_width - (distance_next_node / this_leaf_distance) *base_width
-
+				var w1 = lerp( base_width, tip_width, distance_this_node / this_leaf_distance )
+				var w2 = lerp( base_width, tip_width, distance_next_node / this_leaf_distance )
 				this_segment.line_widths = [ w1, w2 ]
 
 				if this_node.anchor == true:
