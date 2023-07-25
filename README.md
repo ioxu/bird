@@ -5,4 +5,4 @@ A bird game made in the Godot engine
 
 Thank you to https://github.com/krogank9 for PinJoint2D!
 
-Made for Godot v3.2.3
+Made for Godot v3.5
